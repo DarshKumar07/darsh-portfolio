@@ -623,6 +623,8 @@
       font-size: 15px;
       font-weight: 500;
       text-align: right;
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
 
     /* ---------- WORK / PROJECT ---------- */
@@ -882,14 +884,28 @@
 
     /* ---------- MOBILE OPTIMIZATION ---------- */
     @media (max-width: 767px) {
+      html,
       body {
+        width: 100%;
+        max-width: 100%;
         min-width: 0;
-        overflow-x: clip;
+        overflow-x: hidden;
         -webkit-tap-highlight-color: transparent;
+      }
+
+      .wrap,
+      .hero-stage,
+      .project-card,
+      .feature-list,
+      .contact-list,
+      footer {
+        min-width: 0;
+        max-width: 100%;
       }
 
       nav .wrap {
         min-width: 0;
+        width: 100%;
       }
 
       .nav-social {
@@ -1141,6 +1157,11 @@
 
       .feature-list {
         margin-top: 24px;
+        grid-template-columns: 1fr;
+      }
+
+      .feature {
+        min-width: 0;
       }
 
       .contact-row {
@@ -1181,11 +1202,28 @@
       }
 
       .divider {
+        width: 100%;
+        max-width: 100vw;
         height: 112px;
+        min-height: 112px;
+        overflow: hidden;
       }
 
       #dataWaveCanvas {
-        height: 112px;
+        display: block;
+        width: 100% !important;
+        height: 100% !important;
+        min-width: 100%;
+        min-height: 112px;
+      }
+
+      .data-wave-divider::before {
+        z-index: 0;
+      }
+
+      #dataWaveCanvas {
+        position: relative;
+        z-index: 1;
       }
 
       header.hero {
@@ -1791,7 +1829,7 @@
 
         if (photoCard) {
           photoCard.style.transform =
-            'rotateX(' + (currentY * -11) + 'deg) rotateY(' + (currentX * 14) + 'deg)';
+            'rotateX(' + (currentY * -13) + 'deg) rotateY(' + (currentX * 17) + 'deg)';
         }
 
         nameEl.style.transform =
@@ -1863,8 +1901,10 @@
         var dBeta = e.beta - baseBeta;
         var dGamma = e.gamma - baseGamma;
 
-        targetX = Math.max(-0.6, Math.min(0.6, dGamma / 45));
-        targetY = Math.max(-0.6, Math.min(0.6, dBeta / 45));
+        // Increased sensitivity: a smaller angle range now produces the
+        // same parallax response, while the clamp prevents excessive tilt.
+        targetX = Math.max(-0.8, Math.min(0.8, dGamma / 30));
+        targetY = Math.max(-0.8, Math.min(0.8, dBeta / 30));
         startAnimation();
       }
 
@@ -2075,12 +2115,15 @@
       }
 
       function resize() {
-        width = divider.clientWidth;
-        height = divider.clientHeight || 148;
+        const rect = divider.getBoundingClientRect();
+        width = Math.max(1, Math.round(rect.width));
+        height = Math.max(1, Math.round(rect.height || (window.innerWidth <= 480 ? 112 : 172)));
         dpr = Math.min(window.devicePixelRatio || 1, 2);
 
         canvas.width = Math.max(1, Math.round(width * dpr));
         canvas.height = Math.max(1, Math.round(height * dpr));
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         buildParticles();
@@ -2094,7 +2137,7 @@
         // Scale particle density to the device so phones keep the same visual character
         // without carrying the desktop particle workload.
         const activeRibbonCount = width <= 480 ? 3 : width <= 767 ? 4 : ribbonCount;
-        const activeParticleCount = width <= 480 ? 95 : width <= 767 ? 135 : particleCount;
+        const activeParticleCount = width <= 480 ? 125 : width <= 767 ? 165 : particleCount;
 
         // Several dense sinusoidal ribbons form the broad "data fabric".
         for (let r = 0; r < activeRibbonCount; r++) {
@@ -2119,8 +2162,8 @@
             x: random(),
             y: 0.22 + random() * 0.56,
             size: 0.3 + random() * 1.35,
-            alpha: 0.08 + random() * 0.34,
-            speed: 0.064 + random() * 0.096,
+            alpha: 0.10 + random() * 0.38,
+            speed: 0.052 + random() * 0.078,
             phase: random() * Math.PI * 2
           });
         }
@@ -2254,7 +2297,7 @@
         const nodeCount = Math.max(8, Math.floor(width / 150));
         const nodePts = [];
         for (let i = 0; i < nodeCount; i++) {
-          const nx = ((i / nodeCount) * width - time * 34) % (width + 90) - 45;
+          const nx = ((i / nodeCount) * width + time * 34) % (width + 90) - 45;
           const ny = waveCenter(nx, time, 1);
           nodePts.push({ x: nx, y: ny, i });
         }
@@ -2300,6 +2343,13 @@
 
       resize();
       window.addEventListener('resize', resize, { passive: true });
+      window.addEventListener('orientationchange', () => setTimeout(resize, 80), { passive: true });
+
+      if ('ResizeObserver' in window) {
+        const waveResizeObserver = new ResizeObserver(resize);
+        waveResizeObserver.observe(divider);
+      }
+
       draw(0);
     })();
 
