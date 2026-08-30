@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Darsh Kumar Choudhary — AI/ML Engineering Student</title>
+  <title>Darsh Kumar Choudhary</title>
   <meta name="description"
     content="Portfolio of Darsh Kumar Choudhary, B.E. AI/ML student at CMR Institute of Technology, Bengaluru.">
   <link rel="canonical" href="https://darshkumar07.github.io/darsh-portfolio/">
@@ -884,6 +884,7 @@
 
     /* ---------- MOBILE OPTIMIZATION ---------- */
     @media (max-width: 767px) {
+
       html,
       body {
         width: 100%;
@@ -1628,9 +1629,7 @@
 
   <nav>
     <div class="wrap">
-      <img class="site-logo-nav"
-        src="logo.webp"
-        alt="Darsh portfolio logo">
+      <img class="site-logo-nav" src="logo.webp" alt="Darsh portfolio logo">
       <a class="nav-social" href="https://www.linkedin.com/in/darsh-kumar-choudhary-835374420/" target="_blank"
         rel="noopener noreferrer" aria-label="LinkedIn — Darsh Kumar Choudhary">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1716,8 +1715,7 @@
       <div class="project-card flexiheal-card motion-reveal scroll-reveal">
         <div class="project-top">
           <a class="project-icon" href="https://github.com/DarshKumar07/FlexiHeal" target="_blank"
-            rel="noopener noreferrer" aria-label="Open FlexiHeal GitHub repository"><img
-              src="flexiheal-icon.webp"
+            rel="noopener noreferrer" aria-label="Open FlexiHeal GitHub repository"><img src="flexiheal-icon.webp"
               alt="FlexiHeal app icon — a line-art figure stretching inside a circular arrow, in glowing green on dark.">
           </a>
         </div>
@@ -1789,9 +1787,7 @@
 
       <footer>
         <span>© 2026 Darsh Kumar Choudhary</span>
-        <img class="footer-logo"
-          src="logo.webp"
-          alt="" aria-hidden="true">
+        <img class="footer-logo" src="logo.webp" alt="" aria-hidden="true">
         <span>Bengaluru, India</span>
       </footer>
     </div>
@@ -2243,7 +2239,7 @@
         }
 
         // Draw the particle ribbons from rear to front for a layered depth effect.
-        for (let r = ribbonCount - 1; r >= 0; r--) {
+        for (let r = ribbons.length - 1; r >= 0; r--) {
           const ribbon = ribbons[r];
 
           for (const p of ribbon) {
@@ -2344,6 +2340,11 @@
       resize();
       window.addEventListener('resize', resize, { passive: true });
       window.addEventListener('orientationchange', () => setTimeout(resize, 80), { passive: true });
+
+      if (typeof ResizeObserver !== 'undefined') {
+        const waveObserver = new ResizeObserver(() => resize());
+        waveObserver.observe(divider);
+      }
 
       if ('ResizeObserver' in window) {
         const waveResizeObserver = new ResizeObserver(resize);
