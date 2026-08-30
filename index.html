@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Darsh Kumar Choudhary</title>
+  <title>Darsh Kumar Choudhary — AI/ML Engineering Student</title>
   <meta name="description"
     content="Portfolio of Darsh Kumar Choudhary, B.E. AI/ML student at CMR Institute of Technology, Bengaluru.">
   <link rel="canonical" href="https://darshkumar07.github.io/darsh-portfolio/">
@@ -410,6 +410,46 @@
       color: var(--ink-soft);
       z-index: 3;
       backdrop-filter: blur(10px);
+    }
+
+    .tilt-permission-btn {
+      position: absolute;
+      left: 18px;
+      bottom: 24px;
+      z-index: 3;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: rgba(8, 9, 11, .74);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      backdrop-filter: blur(10px);
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .15s ease, opacity .25s ease;
+    }
+
+    .tilt-permission-btn::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px rgba(var(--accent-rgb), .7);
+      flex-shrink: 0;
+    }
+
+    .tilt-permission-btn.is-visible {
+      display: inline-flex;
+    }
+
+    .tilt-permission-btn:active {
+      transform: scale(.95);
     }
 
     /* name + quote */
@@ -860,18 +900,6 @@
       .project-icon,
       .contact-row {
         min-height: 44px;
-      }
-
-      /* Touch devices do not have a meaningful cursor/parallax interaction. */
-      .photo-grid,
-      .grid-scan {
-        will-change: auto;
-      }
-
-      .grid-scan::before {
-        animation: none;
-        top: 50%;
-        opacity: .45;
       }
     }
 
@@ -1562,7 +1590,9 @@
 
   <nav>
     <div class="wrap">
-      <img class="site-logo-nav" src="logo.webp" alt="Darsh portfolio logo">
+      <img class="site-logo-nav"
+        src="logo.webp"
+        alt="Darsh portfolio logo">
       <a class="nav-social" href="https://www.linkedin.com/in/darsh-kumar-choudhary-835374420/" target="_blank"
         rel="noopener noreferrer" aria-label="LinkedIn — Darsh Kumar Choudhary">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1591,6 +1621,7 @@
           <div class="photo-card" id="photoCard">
             <img id="profileImage" src="profile.webp" alt="Darsh Kumar Choudhary" fetchpriority="high" decoding="async">
             <span class="photo-tag">CMRIT · Bengaluru</span>
+            <button type="button" class="tilt-permission-btn" id="tiltPermissionBtn">Enable 3D tilt</button>
           </div>
         </div>
 
@@ -1647,7 +1678,8 @@
       <div class="project-card flexiheal-card motion-reveal scroll-reveal">
         <div class="project-top">
           <a class="project-icon" href="https://github.com/DarshKumar07/FlexiHeal" target="_blank"
-            rel="noopener noreferrer" aria-label="Open FlexiHeal GitHub repository"><img src="flexiheal-icon.webp"
+            rel="noopener noreferrer" aria-label="Open FlexiHeal GitHub repository"><img
+              src="flexiheal-icon.webp"
               alt="FlexiHeal app icon — a line-art figure stretching inside a circular arrow, in glowing green on dark.">
           </a>
         </div>
@@ -1719,41 +1751,33 @@
 
       <footer>
         <span>© 2026 Darsh Kumar Choudhary</span>
-        <img class="footer-logo" src="logo.webp" alt="" aria-hidden="true">
+        <img class="footer-logo"
+          src="logo.webp"
+          alt="" aria-hidden="true">
         <span>Bengaluru, India</span>
       </footer>
     </div>
   </section>
 
   <script>
+    /* ---------- HERO 3D TILT: mouse on desktop, gyroscope on touch ---------- */
     (function () {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var stage = document.getElementById('heroStage');
       var nameEl = document.getElementById('nameEl');
       var quoteEl = document.getElementById('quoteEl');
+      var photoCard = document.getElementById('photoCard');
+      var grid = document.getElementById('photoGrid');
+      var scan = document.getElementById('gridScan');
+      var permBtn = document.getElementById('tiltPermissionBtn');
       var isTouch = window.matchMedia('(hover: none)').matches;
 
-      if (reduced || isTouch || !stage) return;
+      if (reduced || !stage) return;
 
       var targetX = 0, targetY = 0;
       var currentX = 0, currentY = 0;
       var rafId = null;
       var ease = 0.09;
-      var grid = document.getElementById('photoGrid');
-      var scan = document.getElementById('gridScan');
-
-      stage.addEventListener('mousemove', function (e) {
-        var r = stage.getBoundingClientRect();
-        targetX = ((e.clientX - r.left) / r.width) - 0.5;
-        targetY = ((e.clientY - r.top) / r.height) - 0.5;
-        startAnimation();
-      });
-
-      stage.addEventListener('mouseleave', function () {
-        targetX = 0;
-        targetY = 0;
-        startAnimation();
-      });
 
       function startAnimation() {
         if (rafId === null) {
@@ -1764,6 +1788,11 @@
       function update() {
         currentX += (targetX - currentX) * ease;
         currentY += (targetY - currentY) * ease;
+
+        if (photoCard) {
+          photoCard.style.transform =
+            'rotateX(' + (currentY * -11) + 'deg) rotateY(' + (currentX * 14) + 'deg)';
+        }
 
         nameEl.style.transform =
           'translate3d(' + (currentX * -8) + 'px,' + (currentY * -6) + 'px,0)';
@@ -1792,6 +1821,80 @@
           rafId = null;
         }
       }
+
+      if (!isTouch) {
+        // Desktop / mouse-capable devices: tilt follows the cursor.
+        stage.addEventListener('mousemove', function (e) {
+          var r = stage.getBoundingClientRect();
+          targetX = ((e.clientX - r.left) / r.width) - 0.5;
+          targetY = ((e.clientY - r.top) / r.height) - 0.5;
+          startAnimation();
+        });
+
+        stage.addEventListener('mouseleave', function () {
+          targetX = 0;
+          targetY = 0;
+          startAnimation();
+        });
+
+        return;
+      }
+
+      // Touch devices: tilt follows the phone's gyroscope instead, reusing the
+      // exact same easing and parallax logic above.
+      if (typeof DeviceOrientationEvent === 'undefined') return;
+
+      var calibrated = false;
+      var baseBeta = 0, baseGamma = 0;
+      var listening = false;
+
+      function handleOrientation(e) {
+        if (e.beta === null || e.gamma === null) return;
+
+        // First reading becomes the neutral "how you're currently holding the
+        // phone" baseline, so the tilt reacts to movement, not absolute angle.
+        if (!calibrated) {
+          baseBeta = e.beta;
+          baseGamma = e.gamma;
+          calibrated = true;
+          return;
+        }
+
+        var dBeta = e.beta - baseBeta;
+        var dGamma = e.gamma - baseGamma;
+
+        targetX = Math.max(-0.6, Math.min(0.6, dGamma / 45));
+        targetY = Math.max(-0.6, Math.min(0.6, dBeta / 45));
+        startAnimation();
+      }
+
+      function beginListening() {
+        if (listening) return;
+        listening = true;
+        window.addEventListener('deviceorientation', handleOrientation, true);
+      }
+
+      var needsPermission =
+        typeof DeviceOrientationEvent.requestPermission === 'function';
+
+      if (!needsPermission) {
+        // Android and most non-iOS browsers: no permission prompt needed.
+        beginListening();
+        return;
+      }
+
+      // iOS 13+: motion access requires an explicit tap, so surface a small,
+      // clearly-labeled button rather than prompting unannounced.
+      if (!permBtn) return;
+      permBtn.classList.add('is-visible');
+      permBtn.addEventListener('click', function () {
+        DeviceOrientationEvent.requestPermission().then(function (state) {
+          permBtn.classList.remove('is-visible');
+          if (state === 'granted') beginListening();
+        }).catch(function () {
+          permBtn.classList.remove('is-visible');
+        });
+      });
     })();
 
     /* ---------- CUSTOM CURSOR BEHAVIOR ---------- */
@@ -1893,9 +1996,6 @@
         reveals.forEach(el => el.classList.add('is-visible'));
       }
 
-      const hero = document.querySelector('.hero');
-      const grid = document.getElementById('photoGrid');
-      const scan = document.getElementById('gridScan');
       const flexiCard = document.querySelector('.flexiheal-card');
 
       // Let the entire accent system temporarily inherit FlexiHeal's green while the
@@ -1909,39 +2009,6 @@
           document.body.classList.remove('flexi-theme-active');
         });
       }
-
-      if (reduceMotion || !hero || !window.matchMedia('(pointer: fine)').matches) return;
-
-      let raf = null;
-      let tx = 0, ty = 0;
-
-      hero.addEventListener('pointermove', (e) => {
-        const rect = hero.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-        tx = x;
-        ty = y;
-
-        if (!raf) {
-          raf = requestAnimationFrame(() => {
-            if (grid) {
-              grid.style.transform =
-                `translate3d(calc(-50% + ${tx * 14}px), ${ty * 8}px, 0) scale(1.012)`;
-            }
-            if (scan) {
-              scan.style.transform =
-                `translate3d(calc(-50% + ${tx * 10}px), ${ty * 6}px, 0)`;
-            }
-            raf = null;
-          });
-        }
-      });
-
-      hero.addEventListener('pointerleave', () => {
-        if (grid) grid.style.transform = '';
-        if (scan) scan.style.transform = '';
-      });
     })();
 
 
