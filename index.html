@@ -83,10 +83,12 @@
 
     html {
       scroll-behavior: smooth;
+      overflow-x: clip;
     }
 
     body {
       background: var(--paper);
+      overflow-x: clip;
       color: var(--ink);
       font-family: 'Manrope', sans-serif;
       font-size: 16px;
@@ -891,6 +893,7 @@
         max-width: 100%;
         min-width: 0;
         overflow-x: hidden;
+        overflow-x: clip;
         -webkit-tap-highlight-color: transparent;
       }
 
@@ -1899,8 +1902,11 @@
 
         // Increased sensitivity: a smaller angle range now produces the
         // same parallax response, while the clamp prevents excessive tilt.
-        targetX = Math.max(-0.8, Math.min(0.8, dGamma / 30));
-        targetY = Math.max(-0.8, Math.min(0.8, dBeta / 30));
+        // Higher mobile gyroscope sensitivity: approximately 36% more
+        // responsive than the previous /30 mapping, while keeping the same
+        // safety clamp and easing.
+        targetX = Math.max(-0.8, Math.min(0.8, dGamma / 22));
+        targetY = Math.max(-0.8, Math.min(0.8, dBeta / 22));
         startAnimation();
       }
 
