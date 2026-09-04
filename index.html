@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Darsh Kumar Choudhary</title>
+  <title>Darsh Kumar Choudhary — AI/ML Engineering Student</title>
   <meta name="description"
     content="Portfolio of Darsh Kumar Choudhary, B.E. AI/ML student at CMR Institute of Technology, Bengaluru.">
   <link rel="canonical" href="https://darshkumar07.github.io/darsh-portfolio/">
@@ -59,7 +59,7 @@
     .nav-social svg circle:last-child,
     .nav-links a::after,
     .hero-role,
-    .name-3d em,
+    .name-3d .accent-name,
     .project-title::first-letter,
     .photo-stack::before,
     .grid-scan,
@@ -149,8 +149,14 @@
       max-width: var(--max);
     }
 
-    nav .site-logo-nav {
+    nav .site-logo-link {
       grid-column: 1;
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    nav .site-logo-nav {
       justify-self: start;
     }
 
@@ -478,7 +484,7 @@
       will-change: transform;
     }
 
-    .name-3d em {
+    .name-3d .accent-name {
       font-family: 'Manrope', sans-serif;
       font-style: normal;
       font-weight: 400;
@@ -987,8 +993,11 @@
         grid-template-columns: 1fr auto;
       }
 
-      nav .site-logo-nav {
+      nav .site-logo-link {
         grid-column: 1;
+      }
+
+      nav .site-logo-nav {
         width: 38px;
         height: 38px;
       }
@@ -1624,7 +1633,7 @@
   </style>
 </head>
 
-<body>
+<body id="top">
   <!-- Custom Cursor -->
   <div class="custom-cursor-dot" id="cursorDot" aria-hidden="true"></div>
   <div class="custom-cursor-ring" id="cursorRing" aria-hidden="true"></div>
@@ -1632,7 +1641,9 @@
 
   <nav>
     <div class="wrap">
-      <img class="site-logo-nav" src="logo.webp" alt="Darsh portfolio logo">
+      <a href="#top" aria-label="Back to top" class="site-logo-link">
+        <img class="site-logo-nav" src="logo.webp" alt="Darsh portfolio logo" width="168" height="168">
+      </a>
       <a class="nav-social" href="https://www.linkedin.com/in/darsh-kumar-choudhary-835374420/" target="_blank"
         rel="noopener noreferrer" aria-label="LinkedIn — Darsh Kumar Choudhary">
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1659,7 +1670,7 @@
         <div class="photo-stack hero-motion delay-2 hero-parallax">
           <div class="photo-shadow" aria-hidden="true"></div>
           <div class="photo-card" id="photoCard">
-            <img id="profileImage" src="profile.webp" alt="Darsh Kumar Choudhary" fetchpriority="high" decoding="async">
+            <img id="profileImage" src="profile.webp" alt="Darsh Kumar Choudhary" fetchpriority="high" decoding="async" width="605" height="1200">
             <span class="photo-tag">CMRIT · Bengaluru</span>
             <button type="button" class="tilt-permission-btn" id="tiltPermissionBtn">Enable 3D tilt</button>
           </div>
@@ -1667,7 +1678,7 @@
 
         <div class="hero-text" id="heroText">
           <p class="eyebrow">AI/ML Engineering — 2nd Year</p>
-          <h1 class="name-3d" id="nameEl"><span>Darsh Kumar</span><br><em>Choudhary</em></h1>
+          <h1 class="name-3d" id="nameEl"><span>Darsh Kumar</span><br><span class="accent-name">Choudhary</span></h1>
           <p class="hero-role">Second-year engineering student building at the intersection of <strong>Artificial
               Intelligence</strong> and real-world systems.</p>
 
@@ -1719,7 +1730,8 @@
         <div class="project-top">
           <a class="project-icon" href="https://github.com/DarshKumar07/FlexiHeal" target="_blank"
             rel="noopener noreferrer" aria-label="Open FlexiHeal GitHub repository"><img src="flexiheal-icon.webp"
-              alt="FlexiHeal app icon — a line-art figure stretching inside a circular arrow, in glowing green on dark.">
+              alt="FlexiHeal app icon — a line-art figure stretching inside a circular arrow, in glowing green on dark."
+              width="320" height="320">
           </a>
         </div>
         <div class="project-heading">
@@ -1790,7 +1802,7 @@
 
       <footer>
         <span>© 2026 Darsh Kumar Choudhary</span>
-        <img class="footer-logo" src="logo.webp" alt="" aria-hidden="true">
+        <img class="footer-logo" src="logo.webp" alt="" aria-hidden="true" width="168" height="168">
         <span>Bengaluru, India</span>
       </footer>
     </div>
@@ -2346,11 +2358,6 @@
       resize();
       window.addEventListener('resize', resize, { passive: true });
       window.addEventListener('orientationchange', () => setTimeout(resize, 80), { passive: true });
-
-      if (typeof ResizeObserver !== 'undefined') {
-        const waveObserver = new ResizeObserver(() => resize());
-        waveObserver.observe(divider);
-      }
 
       if ('ResizeObserver' in window) {
         const waveResizeObserver = new ResizeObserver(resize);
