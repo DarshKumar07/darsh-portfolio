@@ -4,24 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Darsh Kumar Choudhary — AI/ML Engineering Student</title>
-  <meta name="description"
-    content="Portfolio of Darsh Kumar Choudhary, B.E. AI/ML student at CMR Institute of Technology, Bengaluru.">
+  <title>Darsh Kumar Choudhary | AI/ML Engineer & Developer</title>
+  <meta name="description" content="Exploring the intersection of Artificial Intelligence and real-world problems. Discover the projects, skills, and journey of Darsh Kumar Choudhary.">
+  <meta name="author" content="Darsh Kumar Choudhary">
   <link rel="canonical" href="https://darshkumar07.github.io/darsh-portfolio/">
   <meta name="theme-color" content="#08090B">
-  <meta property="og:title" content="Darsh Kumar Choudhary — AI/ML Engineering Student">
-  <meta property="og:description"
-    content="Portfolio of Darsh Kumar Choudhary, B.E. AI/ML student at CMR Institute of Technology, Bengaluru.">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Darsh Kumar Choudhary | AI/ML Engineer & Developer">
+  <meta property="og:description" content="Exploring the intersection of Artificial Intelligence and real-world problems. Discover my projects, skills, and journey.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://darshkumar07.github.io/darsh-portfolio/">
-  <meta property="og:image" content="https://darshkumar07.github.io/darsh-portfolio/profile.webp">
-  <meta property="og:image:alt" content="Darsh Kumar Choudhary — AI/ML Engineering Student">
+  <meta property="og:image" content="https://darshkumar07.github.io/darsh-portfolio/social-preview.png">
+  <meta property="og:image:secure_url" content="https://darshkumar07.github.io/darsh-portfolio/social-preview.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Darsh Kumar Choudhary — AI/ML Engineer & Developer">
   <meta property="og:site_name" content="Darsh Kumar Choudhary">
+
+  <!-- X / Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Darsh Kumar Choudhary — AI/ML Engineering Student">
-  <meta name="twitter:description"
-    content="Portfolio of Darsh Kumar Choudhary, B.E. AI/ML student at CMR Institute of Technology, Bengaluru.">
-  <meta name="twitter:image" content="https://darshkumar07.github.io/darsh-portfolio/profile.webp">
+  <meta name="twitter:title" content="Darsh Kumar Choudhary | AI/ML Engineer & Developer">
+  <meta name="twitter:description" content="Exploring the intersection of Artificial Intelligence and real-world problems. Discover my projects, skills, and journey.">
+  <meta name="twitter:image" content="https://darshkumar07.github.io/darsh-portfolio/social-preview.png">
+  <meta name="twitter:image:alt" content="Darsh Kumar Choudhary — AI/ML Engineer & Developer">
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
@@ -814,20 +821,49 @@
     }
 
     .contact-row {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 24px 16px;
       margin: 0 -16px;
       border-bottom: 1px solid var(--line);
-      transition: background .22s ease, color .22s ease, padding-left .22s ease;
+      color: var(--ink);
+      transition: color .45s ease, padding-left .45s cubic-bezier(.22, 1, .36, 1),
+        border-color .45s ease, box-shadow .45s ease;
+    }
+
+    .contact-row::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(90deg, rgba(228, 59, 59, .14), rgba(228, 59, 59, .035) 52%, transparent 82%);
+      opacity: 0;
+      transform: translateX(-8%);
+      transition: opacity .45s ease, transform .65s cubic-bezier(.22, 1, .36, 1);
     }
 
     .contact-row:hover,
     .contact-row:focus-visible {
-      background: var(--ink);
-      color: var(--paper);
+      color: #fff;
       padding-left: 26px;
+      border-bottom-color: rgba(228, 59, 59, .42);
+      box-shadow: inset 3px 0 0 var(--accent), 0 0 30px rgba(228, 59, 59, .07);
+      outline: none;
+    }
+
+    .contact-row:hover::after,
+    .contact-row:focus-visible::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .contact-row > *:not(.contact-wave) {
+      position: relative;
+      z-index: 1;
     }
 
     .contact-row .c-label {
@@ -840,39 +876,55 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 12px;
       color: var(--ink-soft);
+      transition: color .35s ease, transform .45s cubic-bezier(.22, 1, .36, 1);
     }
 
-    .contact-row:hover .c-index {
-      color: var(--paper);
-      opacity: 0.65;
+    .contact-row:hover .c-index,
+    .contact-row:focus-visible .c-index {
+      color: var(--accent);
+      transform: translateY(-1px);
     }
 
     .contact-row .c-name {
-      font-family: 'Manrope', serif;
+      font-family: 'Sora', sans-serif;
       font-style: normal;
+      font-weight: 600;
       font-size: clamp(22px, 3.4vw, 30px);
+      letter-spacing: -.035em;
+      transition: color .35s ease, text-shadow .45s ease;
+    }
+
+    .contact-row:hover .c-name,
+    .contact-row:focus-visible .c-name {
+      color: var(--accent);
+      text-shadow: 0 0 18px rgba(228, 59, 59, .18);
     }
 
     .contact-row .c-handle {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 12.5px;
       color: var(--ink-soft);
+      transition: color .35s ease, transform .45s cubic-bezier(.22, 1, .36, 1);
     }
 
-    .contact-row:hover .c-handle {
-      color: var(--paper);
-      opacity: 0.75;
+    .contact-row:hover .c-handle,
+    .contact-row:focus-visible .c-handle {
+      color: rgba(255, 255, 255, .82);
+      transform: translateX(4px);
     }
 
     .contact-row .c-arrow {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 18px;
+      color: var(--ink-soft);
       transform: translateX(0);
-      transition: transform .25s ease, color .2s ease, font-size .2s ease, letter-spacing .2s ease;
+      transition: transform .45s cubic-bezier(.22, 1, .36, 1), color .35s ease, font-size .2s ease, letter-spacing .2s ease;
     }
 
-    .contact-row:hover .c-arrow {
-      transform: translateX(6px);
+    .contact-row:hover .c-arrow,
+    .contact-row:focus-visible .c-arrow {
+      color: var(--accent);
+      transform: translateX(8px);
     }
 
     .contact-row .c-arrow.is-copied {
@@ -881,6 +933,124 @@
       letter-spacing: .08em;
       text-transform: uppercase;
       transform: translateX(0);
+    }
+
+    /* Layered red data-wave inspired by flowing signal ribbons. */
+    .contact-wave {
+      position: absolute;
+      right: 74px;
+      top: 50%;
+      z-index: 0;
+      width: min(34vw, 420px);
+      height: 104px;
+      transform: translateY(-50%) scaleX(.9);
+      transform-origin: left bottom;
+      opacity: 0;
+      pointer-events: none;
+      overflow: visible;
+      transition: opacity .45s ease, transform .75s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .contact-wave svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    .contact-wave path {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+      will-change: stroke-dashoffset, opacity;
+    }
+
+    /* Soft ribbon layers create depth similar to a flowing data stream. */
+    .contact-wave .wave-ribbon-back {
+      stroke: rgba(228, 59, 59, .14);
+      stroke-width: 1.5;
+      stroke-dasharray: 2 7;
+      filter: blur(.2px);
+    }
+
+    .contact-wave .wave-ribbon-mid {
+      stroke: rgba(228, 59, 59, .30);
+      stroke-width: 1.15;
+      stroke-dasharray: 4 9;
+    }
+
+    .contact-wave .wave-ribbon-fine {
+      stroke: rgba(255, 108, 108, .48);
+      stroke-width: .8;
+      stroke-dasharray: 2 12;
+    }
+
+    /* The primary data stream carries a brighter pulse left-to-right. */
+    .contact-wave .wave-stream {
+      stroke: var(--accent);
+      stroke-width: 1.8;
+      stroke-dasharray: 26 34;
+      filter: drop-shadow(0 0 4px rgba(228, 59, 59, .55));
+    }
+
+    .contact-wave .wave-signal {
+      stroke: rgba(255, 225, 225, .72);
+      stroke-width: .75;
+      stroke-dasharray: 5 55;
+      filter: drop-shadow(0 0 5px rgba(228, 59, 59, .8));
+    }
+
+    .contact-row:hover .contact-wave,
+    .contact-row:focus-visible .contact-wave {
+      opacity: .95;
+      transform: translateY(-50%) scaleX(1);
+    }
+
+    .contact-row:hover .contact-wave .wave-ribbon-back,
+    .contact-row:focus-visible .contact-wave .wave-ribbon-back {
+      animation: dataRibbonFlow 3.4s linear infinite;
+    }
+
+    .contact-row:hover .contact-wave .wave-ribbon-mid,
+    .contact-row:focus-visible .contact-wave .wave-ribbon-mid {
+      animation: dataRibbonFlow 2.5s linear infinite reverse;
+    }
+
+    .contact-row:hover .contact-wave .wave-ribbon-fine,
+    .contact-row:focus-visible .contact-wave .wave-ribbon-fine {
+      animation: dataRibbonFlow 1.9s linear infinite;
+    }
+
+    .contact-row:hover .contact-wave .wave-stream,
+    .contact-row:focus-visible .contact-wave .wave-stream {
+      animation: dataStreamFlow 1.45s linear infinite;
+    }
+
+    .contact-row:hover .contact-wave .wave-signal,
+    .contact-row:focus-visible .contact-wave .wave-signal {
+      animation: dataSignalFlow 1.05s linear infinite;
+    }
+
+    @keyframes dataRibbonFlow {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -120; }
+    }
+
+    @keyframes dataStreamFlow {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -120; }
+    }
+
+    @keyframes dataSignalFlow {
+      from { stroke-dashoffset: 0; opacity: .28; }
+      45% { opacity: 1; }
+      to { stroke-dashoffset: -120; opacity: .28; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .contact-row, .contact-row *, .contact-wave i { animation: none !important; }
+      .contact-row:hover .contact-wave, .contact-row:focus-visible .contact-wave { opacity: .38; }
     }
 
     footer {
@@ -1351,6 +1521,21 @@
       }
     }
 
+    /* ---------- FLEXIHEAL MOBILE UPPER SPACING FIX ---------- */
+    @media (max-width: 767px) {
+      /* On phones, remove the desktop-only upward lift and create the extra
+         breathing room ABOVE the icon instead of adding space between the
+         icon and the project details below it. */
+      .flexiheal-card .project-icon {
+        top: 0;
+      }
+
+      .flexiheal-card .project-top {
+        padding-top: 15px;
+        margin-bottom: 0;
+      }
+    }
+
     /* ---------- FLEXIHEAL: BLACK + GREEN ---------- */
     .project-card.flexiheal-card {
       --fh-green: #66E6A8;
@@ -1657,10 +1842,197 @@
         transition: none !important;
       }
     }
+
+
+    /* ---------- INTRO ANIMATION ---------- */
+    /* Reserve scrollbar space permanently so removing scroll during the intro
+       cannot shift the entire website horizontally at the final reveal. */
+    html {
+      scrollbar-gutter: stable;
+    }
+
+    body.intro-active {
+      overflow: hidden;
+      height: 100vh;
+      padding-right: var(--intro-scrollbar-compensation, 0px);
+    }
+
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--paper);
+      z-index: 999999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Ensure it covers everything seamlessly */
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+    }
+
+    .stars-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .intro-star {
+      position: absolute;
+      background: #FFFFFF;
+      border-radius: 50%;
+      opacity: 0;
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+      animation: warpDrift linear forwards;
+    }
+
+    @keyframes warpDrift {
+      0% { transform: scale(0.35) translate3d(0, 10px, 0); opacity: 0.35; }
+      8% { opacity: 0.8; }
+      78% { opacity: 0.8; }
+      100% { transform: scale(1.5) translate3d(0, -50px, 0); opacity: 0; }
+    }
+
+    .intro-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .intro-logo-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .intro-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 20px rgba(228, 59, 59, 0.25));
+      /* Initial deep space state */
+      transform: scale(0) translateZ(-500px);
+      opacity: 0;
+      transition: transform 950ms cubic-bezier(0.22, 1, 0.36, 1), opacity 700ms ease;
+      will-change: transform, opacity, left, top, width, height;
+      transform-origin: center center;
+    }
+
+    .intro-logo.reveal-logo {
+      transform: scale(1) translateZ(0);
+      opacity: 1;
+    }
+
+    .intro-logo.shift-left {
+      transform: translateX(-120px) scale(1);
+    }
+
+    .intro-text {
+      position: absolute;
+      left: 50%;
+      transform: translateX(0);
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(24px, 4vw, 36px);
+      color: var(--ink);
+      white-space: nowrap;
+      opacity: 0;
+      clip-path: inset(0 100% 0 0); /* Hides text from right to left */
+      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.8s ease;
+      will-change: clip-path, opacity;
+    }
+
+    .intro-text .accent-name {
+      color: var(--accent);
+      font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+    }
+
+    .intro-text.reveal-text {
+      opacity: 1;
+      clip-path: inset(0 0 0 0); /* Fully reveals text */
+      transform: translateX(-40px); /* Centers the combined block slightly */
+      transition-delay: 0.2s; /* Waits slightly after logo starts moving */
+    }
+
+    .intro-text.hide-text {
+      opacity: 0;
+      clip-path: inset(0 0 0 100%); /* Disappears smoothly to the right */
+      transition: clip-path 0.5s ease, opacity 0.5s ease;
+    }
+
+    /* Mobile phones: keep the name beneath the logo. Tablets (768px and up)
+       retain the original side-by-side composition. */
+    @media (max-width: 767px) {
+      .intro-content {
+        flex-direction: column;
+      }
+
+      .intro-logo.shift-left {
+        transform: translateX(0) scale(1);
+      }
+
+      .intro-text {
+        left: 50%;
+        /* Position below the full 140px logo, rather than over its lower edge. */
+        top: calc(100% + 18px);
+        transform: translateX(-50%);
+        width: max-content;
+        max-width: calc(100vw - 32px);
+        text-align: center;
+        white-space: normal;
+        line-height: 1.2;
+      }
+
+      .intro-text.reveal-text {
+        transform: translateX(-50%);
+      }
+    }
+
+
+    /* ---------- HIGH-REFRESH-RATE PERFORMANCE ---------- */
+    /* Keep compositor-friendly animated layers isolated where possible. */
+    .grid-scan,
+    .custom-cursor-dot,
+    .custom-cursor-ring,
+    #dataWaveCanvas {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .grid-scan::before {
+      will-change: transform;
+    }
+
+    .grid-scan.is-paused::before {
+      animation-play-state: paused;
+    }
+
+    #dataWaveCanvas {
+      contain: paint;
+    }
+
   </style>
 </head>
 
 <body id="top">
+  <!-- INTRO ANIMATION OVERLAY -->
+  <div id="intro-overlay" aria-hidden="true">
+    <div class="stars-bg" id="starsBg"></div>
+    <div class="intro-content">
+      <div class="intro-logo-wrapper">
+        <img src="logo.webp" class="intro-logo" id="introLogo" alt="Darsh Portfolio Logo">
+      </div>
+      <div class="intro-text" id="introText">
+        Darsh Kumar <span class="accent-name">Choudhary</span>
+      </div>
+    </div>
+  </div>
+
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
   <!-- Custom Cursor -->
   <div class="custom-cursor-dot" id="cursorDot" aria-hidden="true"></div>
@@ -1810,18 +2182,60 @@
 
       <div class="contact-list scroll-reveal">
         <a class="contact-row scroll-reveal" href="mailto:darsh.aiml25@cmrit.ac.in" id="emailRow">
+          <span class="contact-wave" aria-hidden="true">
+            <svg viewBox="0 0 420 92" preserveAspectRatio="none">
+              <!-- Diagonal data stream: bottom-left flowing toward top-right. -->
+              <path class="wave-ribbon-back" d="M-12 88 C28 73 49 91 88 77 S142 61 177 69 S228 42 263 52 S316 17 350 30 S395 11 432 4" />
+              <path class="wave-ribbon-back" d="M-10 82 C24 67 55 88 95 72 S146 54 184 62 S235 36 272 48 S322 13 360 23 S402 7 432 0" />
+              <path class="wave-ribbon-mid" d="M-10 91 C31 78 61 85 101 70 S152 58 192 65 S246 39 282 49 S331 20 368 28 S407 10 432 6" />
+              <path class="wave-ribbon-mid" d="M-12 75 C21 61 53 80 91 67 S140 48 178 56 S229 31 268 42 S317 11 355 20 S398 5 432 -2" />
+              <path class="wave-ribbon-fine" d="M-10 86 C27 71 52 95 93 76 S144 57 182 66 S236 40 274 53 S325 16 361 29 S403 9 432 3" />
+              <path class="wave-ribbon-fine" d="M-10 79 C28 66 58 86 99 69 S149 50 188 60 S241 34 279 45 S329 12 367 22 S406 6 432 -1" />
+              <path class="wave-ribbon-fine" d="M-10 90 C29 82 63 91 104 74 S158 61 198 70 S252 45 290 55 S338 25 376 33 S411 14 432 9" />
+              <path class="wave-stream" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
+              <path class="wave-signal" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
+            </svg>
+          </span>
           <span class="c-label"><span class="c-index">01</span><span class="c-name">Email</span></span>
           <span class="c-handle">darsh.aiml25@cmrit.ac.in</span>
           <span class="c-arrow" id="emailArrow">→</span>
         </a>
         <a class="contact-row scroll-reveal" href="https://www.linkedin.com/in/darsh-kumar-choudhary-835374420"
           target="_blank" rel="noopener">
+          <span class="contact-wave" aria-hidden="true">
+            <svg viewBox="0 0 420 92" preserveAspectRatio="none">
+              <!-- Diagonal data stream: bottom-left flowing toward top-right. -->
+              <path class="wave-ribbon-back" d="M-12 88 C28 73 49 91 88 77 S142 61 177 69 S228 42 263 52 S316 17 350 30 S395 11 432 4" />
+              <path class="wave-ribbon-back" d="M-10 82 C24 67 55 88 95 72 S146 54 184 62 S235 36 272 48 S322 13 360 23 S402 7 432 0" />
+              <path class="wave-ribbon-mid" d="M-10 91 C31 78 61 85 101 70 S152 58 192 65 S246 39 282 49 S331 20 368 28 S407 10 432 6" />
+              <path class="wave-ribbon-mid" d="M-12 75 C21 61 53 80 91 67 S140 48 178 56 S229 31 268 42 S317 11 355 20 S398 5 432 -2" />
+              <path class="wave-ribbon-fine" d="M-10 86 C27 71 52 95 93 76 S144 57 182 66 S236 40 274 53 S325 16 361 29 S403 9 432 3" />
+              <path class="wave-ribbon-fine" d="M-10 79 C28 66 58 86 99 69 S149 50 188 60 S241 34 279 45 S329 12 367 22 S406 6 432 -1" />
+              <path class="wave-ribbon-fine" d="M-10 90 C29 82 63 91 104 74 S158 61 198 70 S252 45 290 55 S338 25 376 33 S411 14 432 9" />
+              <path class="wave-stream" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
+              <path class="wave-signal" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
+            </svg>
+          </span>
           <span class="c-label"><span class="c-index">02</span><span class="c-name">LinkedIn</span></span>
           <span class="c-handle">Darsh Kumar Choudhary</span>
           <span class="c-arrow">→</span>
         </a>
         <a class="contact-row scroll-reveal" href="https://www.instagram.com/kumar.darsh07" target="_blank"
           rel="noopener">
+          <span class="contact-wave" aria-hidden="true">
+            <svg viewBox="0 0 420 92" preserveAspectRatio="none">
+              <!-- Diagonal data stream: bottom-left flowing toward top-right. -->
+              <path class="wave-ribbon-back" d="M-12 88 C28 73 49 91 88 77 S142 61 177 69 S228 42 263 52 S316 17 350 30 S395 11 432 4" />
+              <path class="wave-ribbon-back" d="M-10 82 C24 67 55 88 95 72 S146 54 184 62 S235 36 272 48 S322 13 360 23 S402 7 432 0" />
+              <path class="wave-ribbon-mid" d="M-10 91 C31 78 61 85 101 70 S152 58 192 65 S246 39 282 49 S331 20 368 28 S407 10 432 6" />
+              <path class="wave-ribbon-mid" d="M-12 75 C21 61 53 80 91 67 S140 48 178 56 S229 31 268 42 S317 11 355 20 S398 5 432 -2" />
+              <path class="wave-ribbon-fine" d="M-10 86 C27 71 52 95 93 76 S144 57 182 66 S236 40 274 53 S325 16 361 29 S403 9 432 3" />
+              <path class="wave-ribbon-fine" d="M-10 79 C28 66 58 86 99 69 S149 50 188 60 S241 34 279 45 S329 12 367 22 S406 6 432 -1" />
+              <path class="wave-ribbon-fine" d="M-10 90 C29 82 63 91 104 74 S158 61 198 70 S252 45 290 55 S338 25 376 33 S411 14 432 9" />
+              <path class="wave-stream" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
+              <path class="wave-signal" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
+            </svg>
+          </span>
           <span class="c-label"><span class="c-index">03</span><span class="c-name">Instagram</span></span>
           <span class="c-handle">@kumar.darsh07</span>
           <span class="c-arrow">→</span>
@@ -1837,6 +2251,161 @@
   </section>
 
   <script>
+
+    /* ---------- INTRO ANIMATION SEQUENCE ---------- */
+    document.addEventListener("DOMContentLoaded", () => {
+      const overlay = document.getElementById('intro-overlay');
+      const introLogo = document.getElementById('introLogo');
+      const introText = document.getElementById('introText');
+      const realLogo = document.querySelector('.site-logo-nav');
+      const starsBg = document.getElementById('starsBg');
+
+      if (!overlay || !introLogo || !introText || !realLogo || !starsBg) return;
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const scrollbarWidth = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+
+      document.documentElement.style.setProperty('--intro-scrollbar-compensation', `${scrollbarWidth}px`);
+      document.body.classList.add('intro-active');
+      window.scrollTo(0, 0);
+
+      // Keep the real logo in its final position, but hide it until the handoff.
+      realLogo.style.opacity = '0';
+      realLogo.style.pointerEvents = 'none';
+      realLogo.style.transition = 'opacity 180ms ease';
+
+      // Build the star field immediately so space is visible from the beginning.
+      const starCount = window.innerWidth < 768 ? 46 : 92;
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        const size = Math.random() * 2 + 0.7;
+        star.className = 'intro-star';
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.animationDuration = `${Math.random() * 2.2 + 3.2}s`;
+        star.style.animationDelay = `${Math.random() * 0.35}s`;
+        starsBg.appendChild(star);
+      }
+
+      if (reduceMotion) {
+        realLogo.style.opacity = '1';
+        realLogo.style.pointerEvents = '';
+        overlay.remove();
+        document.body.classList.remove('intro-active');
+        document.documentElement.style.removeProperty('--intro-scrollbar-compensation');
+        return;
+      }
+
+      // STEP 1: centre logo reveal.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => introLogo.classList.add('reveal-logo'));
+      });
+
+      // STEP 2: reveal the name.
+      setTimeout(() => {
+        introLogo.classList.add('shift-left');
+        introText.classList.add('reveal-text');
+      }, 1000);
+
+      // STEP 3: hide the name.
+      setTimeout(() => {
+        introText.classList.remove('reveal-text');
+        introText.classList.add('hide-text');
+      }, 2920);
+
+      let targetCenterX = 0;
+      let targetCenterY = 0;
+
+      // STEP 4: smooth FLIP flight to the exact underlying navigation logo.
+      setTimeout(() => {
+        const startRect = introLogo.getBoundingClientRect();
+        const targetRect = realLogo.getBoundingClientRect();
+
+        targetCenterX = targetRect.left + targetRect.width / 2;
+        targetCenterY = targetRect.top + targetRect.height / 2;
+
+        introLogo.classList.remove('shift-left');
+        introLogo.style.transition = 'none';
+        introLogo.style.position = 'fixed';
+        introLogo.style.left = `${targetRect.left}px`;
+        introLogo.style.top = `${targetRect.top}px`;
+        introLogo.style.width = `${targetRect.width}px`;
+        introLogo.style.height = `${targetRect.height}px`;
+        introLogo.style.margin = '0';
+        introLogo.style.zIndex = '3';
+        introLogo.style.transformOrigin = 'top left';
+
+        const deltaX = startRect.left - targetRect.left;
+        const deltaY = startRect.top - targetRect.top;
+        const scaleX = startRect.width / targetRect.width;
+        const scaleY = startRect.height / targetRect.height;
+
+        introLogo.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(${scaleX}, ${scaleY})`;
+        void introLogo.offsetWidth;
+
+        requestAnimationFrame(() => {
+          introLogo.style.transition = 'transform 1000ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease';
+          introLogo.style.transform = 'translate3d(0, 0, 0) scale(1, 1)';
+        });
+      }, 3500);
+
+      // STEP 5: hand off to the real logo, then pull the space overlay INTO it.
+      setTimeout(() => {
+        const targetRect = realLogo.getBoundingClientRect();
+        targetCenterX = targetRect.left + targetRect.width / 2;
+        targetCenterY = targetRect.top + targetRect.height / 2;
+
+        // Keep the moving intro logo visible throughout the inward warp.
+        // The real navigation logo is revealed underneath it so the overlay can
+        // disappear cleanly at the end without a visual jump or logo flicker.
+        realLogo.style.opacity = '1';
+        realLogo.style.pointerEvents = '';
+        introLogo.style.opacity = '1';
+
+        const maxRadius = Math.max(
+          Math.hypot(targetCenterX, targetCenterY),
+          Math.hypot(window.innerWidth - targetCenterX, targetCenterY),
+          Math.hypot(targetCenterX, window.innerHeight - targetCenterY),
+          Math.hypot(window.innerWidth - targetCenterX, window.innerHeight - targetCenterY)
+        ) + 100;
+
+        const revealDuration = 1200;
+        const revealStart = performance.now();
+
+        function animateInwardWarp(now) {
+          const progress = Math.min((now - revealStart) / revealDuration, 1);
+          // Slow at first, then increasingly pulled into the logo.
+          const eased = 1 - Math.pow(1 - progress, 2.6);
+          const radius = Math.max(0, (1 - eased) * maxRadius);
+          const ripple = Math.sin(progress * Math.PI * 4) * (1 - progress) * 18;
+          const warpedRadius = Math.max(0, radius + ripple);
+          const softInner = Math.max(0, warpedRadius - 34);
+          const softOuter = warpedRadius + 42;
+
+          // Black = overlay remains visible; transparent = website beneath is revealed.
+          const mask = `radial-gradient(circle at ${targetCenterX}px ${targetCenterY}px, #000 0px, #000 ${softInner}px, rgba(0,0,0,.78) ${warpedRadius}px, rgba(0,0,0,.24) ${softOuter}px, transparent ${warpedRadius + 82}px)`;
+          overlay.style.webkitMaskImage = mask;
+          overlay.style.maskImage = mask;
+
+          if (progress < 1) {
+            requestAnimationFrame(animateInwardWarp);
+          } else {
+            // Keep the intro logo visible until the overlay itself disappears.
+            // The real nav logo is already visible directly beneath it for a seamless handoff.
+            setTimeout(() => {
+              overlay.remove();
+              document.body.classList.remove('intro-active');
+              document.documentElement.style.removeProperty('--intro-scrollbar-compensation');
+            }, 40);
+          }
+        }
+
+        requestAnimationFrame(animateInwardWarp);
+      }, 4500);
+    });
+
     /* ---------- EMAIL ROW: click to copy instead of (or before) opening mail ---------- */
     (function () {
       const emailRow = document.getElementById('emailRow');
@@ -1908,61 +2477,71 @@
       window.addEventListener('resize', update, { passive: true });
       update();
     })();
-
-    /* ---------- HERO 3D TILT: mouse on desktop, gyroscope on touch ---------- */
+    /* ---------- HERO 3D TILT: HIGH-REFRESH-RATE OPTIMIZED ---------- */
     (function () {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var stage = document.getElementById('heroStage');
-      var nameEl = document.getElementById('nameEl');
-      var quoteEl = document.getElementById('quoteEl');
-      var photoCard = document.getElementById('photoCard');
-      var grid = document.getElementById('photoGrid');
-      var scan = document.getElementById('gridScan');
-      var permBtn = document.getElementById('tiltPermissionBtn');
-      var isTouch = window.matchMedia('(hover: none)').matches;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const stage = document.getElementById('heroStage');
+      const nameEl = document.getElementById('nameEl');
+      const quoteEl = document.getElementById('quoteEl');
+      const photoCard = document.getElementById('photoCard');
+      const grid = document.getElementById('photoGrid');
+      const scan = document.getElementById('gridScan');
+      const permBtn = document.getElementById('tiltPermissionBtn');
+      const isTouch = window.matchMedia('(hover: none)').matches;
 
       if (reduced || !stage) return;
 
-      var targetX = 0, targetY = 0;
-      var currentX = 0, currentY = 0;
-      var rafId = null;
-      var ease = 0.09;
+      let targetX = 0, targetY = 0;
+      let currentX = 0, currentY = 0;
+      let rafId = null;
+      let lastFrame = 0;
+      let stageRect = null;
+
+      function refreshRect() {
+        stageRect = stage.getBoundingClientRect();
+      }
 
       function startAnimation() {
-        if (rafId === null) {
+        if (rafId === null && !document.hidden) {
+          lastFrame = performance.now();
           rafId = requestAnimationFrame(update);
         }
       }
 
-      function update() {
-        currentX += (targetX - currentX) * ease;
-        currentY += (targetY - currentY) * ease;
+      function update(now) {
+        const dt = Math.min(34, Math.max(1, now - lastFrame || 16.67));
+        lastFrame = now;
+
+        // Same perceived easing at 60 Hz and 120 Hz.
+        const smoothing = 1 - Math.pow(1 - 0.09, dt / 16.667);
+        currentX += (targetX - currentX) * smoothing;
+        currentY += (targetY - currentY) * smoothing;
 
         if (photoCard) {
           photoCard.style.transform =
-            'rotateX(' + (currentY * -13) + 'deg) rotateY(' + (currentX * 17) + 'deg)';
+            `rotateX(${currentY * -13}deg) rotateY(${currentX * 17}deg)`;
         }
-
-        nameEl.style.transform =
-          'translate3d(' + (currentX * -8) + 'px,' + (currentY * -6) + 'px,0)';
-        quoteEl.style.transform =
-          'translate3d(' + (currentX * -4) + 'px,' + (currentY * -3) + 'px,0)';
-
+        if (nameEl) {
+          nameEl.style.transform =
+            `translate3d(${currentX * -8}px, ${currentY * -6}px, 0)`;
+        }
+        if (quoteEl) {
+          quoteEl.style.transform =
+            `translate3d(${currentX * -4}px, ${currentY * -3}px, 0)`;
+        }
         if (grid) {
           grid.style.transform =
-            'translate3d(calc(-50% + ' + (currentX * 14) + 'px), ' +
-            (currentY * 8) + 'px, 0) scale(1.012)';
+            `translate3d(calc(-50% + ${currentX * 14}px), ${currentY * 8}px, 0) scale(1.012)`;
         }
         if (scan) {
           scan.style.transform =
-            'translate3d(calc(-50% + ' + (currentX * 10) + 'px), ' +
-            (currentY * 6) + 'px, 0)';
+            `translate3d(calc(-50% + ${currentX * 10}px), ${currentY * 6}px, 0)`;
         }
 
-        var dx = Math.abs(targetX - currentX);
-        var dy = Math.abs(targetY - currentY);
+        const dx = Math.abs(targetX - currentX);
+        const dy = Math.abs(targetY - currentY);
 
-        if (dx > 0.0005 || dy > 0.0005) {
+        if (!document.hidden && (dx > 0.0005 || dy > 0.0005)) {
           rafId = requestAnimationFrame(update);
         } else {
           currentX = targetX;
@@ -1971,87 +2550,86 @@
         }
       }
 
-      if (!isTouch) {
-        // Desktop / mouse-capable devices: tilt follows the cursor.
-        stage.addEventListener('mousemove', function (e) {
-          var r = stage.getBoundingClientRect();
-          targetX = ((e.clientX - r.left) / r.width) - 0.5;
-          targetY = ((e.clientY - r.top) / r.height) - 0.5;
-          startAnimation();
-        });
-
-        stage.addEventListener('mouseleave', function () {
-          targetX = 0;
-          targetY = 0;
-          startAnimation();
-        });
-
-        return;
-      }
-
-      // Touch devices: tilt follows the phone's gyroscope instead, reusing the
-      // exact same easing and parallax logic above.
-      if (typeof DeviceOrientationEvent === 'undefined') return;
-
-      var calibrated = false;
-      var baseBeta = 0, baseGamma = 0;
-      var listening = false;
-
-      function handleOrientation(e) {
-        if (e.beta === null || e.gamma === null) return;
-
-        // First reading becomes the neutral "how you're currently holding the
-        // phone" baseline, so the tilt reacts to movement, not absolute angle.
-        if (!calibrated) {
-          baseBeta = e.beta;
-          baseGamma = e.gamma;
-          calibrated = true;
-          return;
-        }
-
-        var dBeta = e.beta - baseBeta;
-        var dGamma = e.gamma - baseGamma;
-
-        // Increased sensitivity: a smaller angle range now produces the
-        // same parallax response, while the clamp prevents excessive tilt.
-        // Higher mobile gyroscope sensitivity: approximately 36% more
-        // responsive than the previous /30 mapping, while keeping the same
-        // safety clamp and easing.
-        targetX = Math.max(-0.8, Math.min(0.8, dGamma / 22));
-        targetY = Math.max(-0.8, Math.min(0.8, dBeta / 22));
+      function setMouseTarget(e) {
+        if (!stageRect) refreshRect();
+        targetX = ((e.clientX - stageRect.left) / stageRect.width) - 0.5;
+        targetY = ((e.clientY - stageRect.top) / stageRect.height) - 0.5;
         startAnimation();
       }
 
-      function beginListening() {
-        if (listening) return;
-        listening = true;
-        window.addEventListener('deviceorientation', handleOrientation, true);
+      if (!isTouch) {
+        stage.addEventListener('pointerenter', (e) => {
+          refreshRect();
+          setMouseTarget(e);
+        }, { passive: true });
+
+        stage.addEventListener('pointermove', setMouseTarget, { passive: true });
+
+        stage.addEventListener('pointerleave', () => {
+          targetX = 0;
+          targetY = 0;
+          startAnimation();
+        }, { passive: true });
+
+        window.addEventListener('resize', refreshRect, { passive: true });
+      } else if (typeof DeviceOrientationEvent !== 'undefined') {
+        let calibrated = false;
+        let baseBeta = 0, baseGamma = 0;
+        let listening = false;
+
+        function handleOrientation(e) {
+          if (e.beta === null || e.gamma === null) return;
+
+          if (!calibrated) {
+            baseBeta = e.beta;
+            baseGamma = e.gamma;
+            calibrated = true;
+            return;
+          }
+
+          const dBeta = e.beta - baseBeta;
+          const dGamma = e.gamma - baseGamma;
+
+          targetX = Math.max(-0.8, Math.min(0.8, dGamma / 22));
+          targetY = Math.max(-0.8, Math.min(0.8, dBeta / 22));
+          startAnimation();
+        }
+
+        function beginListening() {
+          if (listening) return;
+          listening = true;
+          window.addEventListener('deviceorientation', handleOrientation, true);
+        }
+
+        const needsPermission =
+          typeof DeviceOrientationEvent.requestPermission === 'function';
+
+        if (!needsPermission) {
+          beginListening();
+        } else if (permBtn) {
+          permBtn.classList.add('is-visible');
+          permBtn.addEventListener('click', function () {
+            DeviceOrientationEvent.requestPermission().then(function (state) {
+              permBtn.classList.remove('is-visible');
+              if (state === 'granted') beginListening();
+            }).catch(function () {
+              permBtn.classList.remove('is-visible');
+            });
+          });
+        }
       }
 
-      var needsPermission =
-        typeof DeviceOrientationEvent.requestPermission === 'function';
-
-      if (!needsPermission) {
-        // Android and most non-iOS browsers: no permission prompt needed.
-        beginListening();
-        return;
-      }
-
-      // iOS 13+: motion access requires an explicit tap, so surface a small,
-      // clearly-labeled button rather than prompting unannounced.
-      if (!permBtn) return;
-      permBtn.classList.add('is-visible');
-      permBtn.addEventListener('click', function () {
-        DeviceOrientationEvent.requestPermission().then(function (state) {
-          permBtn.classList.remove('is-visible');
-          if (state === 'granted') beginListening();
-        }).catch(function () {
-          permBtn.classList.remove('is-visible');
-        });
-      });
+      // Never keep a hidden tab's animation loop alive.
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        } else if (!document.hidden) {
+          startAnimation();
+        }
+      }, { passive: true });
     })();
-
-    /* ---------- CUSTOM CURSOR BEHAVIOR ---------- */
+    /* ---------- CUSTOM CURSOR BEHAVIOR: ON-DEMAND RENDERING ---------- */
     (function () {
       const dot = document.getElementById('cursorDot');
       const ring = document.getElementById('cursorRing');
@@ -2063,13 +2641,46 @@
       let ringX = mouseX;
       let ringY = mouseY;
       let visible = false;
+      let rafId = null;
+      let lastFrame = 0;
+      let lastMove = 0;
 
       const interactiveSelector =
         'a, button, input, textarea, select, [role="button"], .project-card, .photo-card';
 
-      window.addEventListener('mousemove', (e) => {
+      function startRing() {
+        if (rafId === null && !document.hidden) {
+          lastFrame = performance.now();
+          rafId = requestAnimationFrame(animateRing);
+        }
+      }
+
+      function animateRing(now) {
+        const dt = Math.min(34, Math.max(1, now - lastFrame || 16.67));
+        lastFrame = now;
+
+        // Match the old trailing feel regardless of display refresh rate.
+        const follow = 1 - Math.pow(1 - 0.16, dt / 16.667);
+        ringX += (mouseX - ringX) * follow;
+        ringY += (mouseY - ringY) * follow;
+
+        ring.style.transform =
+          `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+
+        const distance = Math.hypot(mouseX - ringX, mouseY - ringY);
+        if (!document.hidden && (distance > 0.12 || now - lastMove < 80)) {
+          rafId = requestAnimationFrame(animateRing);
+        } else {
+          ringX = mouseX;
+          ringY = mouseY;
+          rafId = null;
+        }
+      }
+
+      window.addEventListener('pointermove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
+        lastMove = performance.now();
 
         dot.style.transform =
           `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
@@ -2082,37 +2693,32 @@
         const target = e.target.closest(interactiveSelector);
         ring.classList.toggle('is-hovering', !!target);
         dot.classList.toggle('is-hovering', !!target);
-      });
+        startRing();
+      }, { passive: true });
 
-      window.addEventListener('mousedown', () => {
+      window.addEventListener('pointerdown', () => {
         ring.classList.add('is-clicking');
-      });
+      }, { passive: true });
 
-      window.addEventListener('mouseup', () => {
+      window.addEventListener('pointerup', () => {
         ring.classList.remove('is-clicking');
-      });
+      }, { passive: true });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      }, { passive: true });
 
       window.addEventListener('mouseleave', () => {
         document.body.classList.add('cursor-hidden');
-      });
+      }, { passive: true });
 
       window.addEventListener('mouseenter', () => {
         document.body.classList.remove('cursor-hidden');
-      });
-
-      function animateRing() {
-        ringX += (mouseX - ringX) * 0.16;
-        ringY += (mouseY - ringY) * 0.16;
-
-        ring.style.transform =
-          `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
-
-        requestAnimationFrame(animateRing);
-      }
-
-      animateRing();
+      }, { passive: true });
     })();
-
 
     /* ---------- HERO + SCROLL MOTION ---------- */
     (function () {
@@ -2150,23 +2756,81 @@
         reveals.forEach(el => el.classList.add('is-visible'));
       }
 
-      const flexiCard = document.querySelector('.flexiheal-card');
-
-      // Let the entire accent system temporarily inherit FlexiHeal's green while the
-      // pointer is over its card. This is deliberately pointer-based so touch devices
-      // never get stuck in the hover state.
-      if (flexiCard && window.matchMedia('(pointer: fine)').matches) {
-        flexiCard.addEventListener('pointerenter', () => {
-          document.body.classList.add('flexi-theme-active');
-        });
-        flexiCard.addEventListener('pointerleave', () => {
-          document.body.classList.remove('flexi-theme-active');
-        });
+      // Pause the paint-heavy grid scan while the hero is outside the viewport.
+      const gridScan = document.getElementById('gridScan');
+      if (gridScan && 'IntersectionObserver' in window) {
+        const gridScanObserver = new IntersectionObserver((entries) => {
+          gridScan.classList.toggle('is-paused', !entries[0].isIntersecting);
+        }, { threshold: 0, rootMargin: '120px 0px 120px 0px' });
+        gridScanObserver.observe(gridScan);
       }
+
+      // FlexiHeal hover handling is managed by the logo back-to-top controller below
+      // so pointer events triggered by smooth scrolling cannot cause visual hitching.
     })();
 
 
-    /* ---------- FLOWING DATA WAVE ---------- */
+    /* ---------- LOGO BACK-TO-TOP: PREVENT HOVER THEME JITTER ---------- */
+    (function () {
+      const logoLink = document.querySelector('.site-logo-link');
+      const flexiCard = document.querySelector('.flexiheal-card');
+      if (!logoLink) return;
+
+      let suppressFlexiHover = false;
+      let scrollEndTimer = null;
+
+      function finishBackToTop() {
+        suppressFlexiHover = false;
+        document.body.classList.remove('flexi-theme-active');
+        clearTimeout(scrollEndTimer);
+      }
+
+      // While the page itself moves underneath a stationary mouse pointer, browsers can
+      // briefly fire pointer enter/leave events for the FlexiHeal card. That was causing
+      // the global accent transition to repaint during the smooth scroll and made the
+      // page appear to hitch. The logo scroll temporarily suppresses that hover state.
+      if (flexiCard && window.matchMedia('(pointer: fine)').matches) {
+        flexiCard.addEventListener('pointerenter', () => {
+          if (!suppressFlexiHover) document.body.classList.add('flexi-theme-active');
+        });
+        flexiCard.addEventListener('pointerleave', () => {
+          if (!suppressFlexiHover) document.body.classList.remove('flexi-theme-active');
+        });
+      }
+
+      logoLink.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        suppressFlexiHover = true;
+        document.body.classList.remove('flexi-theme-active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // scrollend is not available everywhere, so keep a small debounced fallback.
+        clearTimeout(scrollEndTimer);
+        const watchScroll = () => {
+          clearTimeout(scrollEndTimer);
+          if (window.scrollY <= 1) {
+            scrollEndTimer = setTimeout(finishBackToTop, 120);
+          } else {
+            scrollEndTimer = setTimeout(finishBackToTop, 180);
+          }
+        };
+        window.addEventListener('scroll', watchScroll, { passive: true, once: false });
+
+        // Remove the temporary watcher shortly after the animation should have settled.
+        setTimeout(() => {
+          window.removeEventListener('scroll', watchScroll);
+          if (window.scrollY <= 1) finishBackToTop();
+        }, 1800);
+      });
+
+      if ('onscrollend' in window) {
+        window.addEventListener('scrollend', () => {
+          if (suppressFlexiHover) finishBackToTop();
+        }, { passive: true });
+      }
+    })();
+    /* ---------- FLOWING DATA WAVE: ADAPTIVE HIGH-REFRESH-RATE RENDERER ---------- */
     (function () {
       const canvas = document.getElementById('dataWaveCanvas');
       if (!canvas) return;
@@ -2182,28 +2846,34 @@
       let dpr = 1;
       let time = 0;
       let lastTime = 0;
+      let lastDraw = 0;
+      let rafId = null;
+      let isVisible = false;
+      let resizeQueued = false;
+      let accentCheckAt = 0;
+
+      // Canvas remains visually smooth while the rest of the interface can use the
+      // display's full refresh rate. This prevents an expensive particle renderer
+      // from doubling its workload on 120/144 Hz panels without perceptible benefit.
+      const targetFrameMs = 1000 / 60;
 
       const ribbons = [];
       const dust = [];
       const ribbonCount = 5;
       const particleCount = 230;
 
-      // Deterministic pseudo-random generator keeps the wave stable between frames.
       let seed = 9137;
       function random() {
         seed = (seed * 16807) % 2147483647;
         return (seed - 1) / 2147483646;
       }
 
-      // Live accent color, read from the same --accent-rgb custom property the
-      // FlexiHeal hover-theme swaps between red and green, so this wave always
-      // matches the rest of the site instead of carrying its own hardcoded copy.
       let accentRGB = [228, 59, 59];
       function readAccent() {
         const raw = getComputedStyle(document.body).getPropertyValue('--accent-rgb').trim();
         if (!raw) return;
         const parts = raw.split(',').map(v => parseInt(v.trim(), 10));
-        if (parts.length === 3 && parts.every(n => !isNaN(n))) accentRGB = parts;
+        if (parts.length === 3 && parts.every(Number.isFinite)) accentRGB = parts;
       }
 
       function mixc(a, b, t) {
@@ -2215,14 +2885,7 @@
       }
       const WHITE = [245, 245, 246];
 
-      // The wave bends gently toward wherever the cursor sits over the divider —
-      // a small, cheap echo of the pointer-driven parallax used in the hero.
       let pointerX = 0.5, targetPointerX = 0.5;
-
-      // A fast scroll briefly agitates the whole field — faster drift, wider
-      // excursion — then it settles back to its normal ambient motion. Ties
-      // the wave to something the visitor is actually doing, rather than it
-      // always looking the same regardless of how they're using the page.
       let turbulence = 0;
       let lastScrollY = window.scrollY || 0;
 
@@ -2231,11 +2894,13 @@
           const r = divider.getBoundingClientRect();
           targetPointerX = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
         }, { passive: true });
+
         divider.addEventListener('pointerleave', () => {
           targetPointerX = 0.5;
         }, { passive: true });
 
         window.addEventListener('scroll', () => {
+          if (!isVisible) return;
           const y = window.scrollY || 0;
           const delta = Math.abs(y - lastScrollY);
           lastScrollY = y;
@@ -2243,11 +2908,23 @@
         }, { passive: true });
       }
 
+      function queueResize() {
+        if (resizeQueued) return;
+        resizeQueued = true;
+        requestAnimationFrame(() => {
+          resizeQueued = false;
+          resize();
+        });
+      }
+
       function resize() {
         const rect = divider.getBoundingClientRect();
         width = Math.max(1, Math.round(rect.width));
         height = Math.max(1, Math.round(rect.height || (window.innerWidth <= 480 ? 112 : 172)));
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        // A capped backing-store resolution avoids expensive 3x/4x canvas rendering
+        // on high-density, high-refresh-rate displays while preserving visual sharpness.
+        dpr = Math.min(window.devicePixelRatio || 1, width <= 767 ? 1.5 : 2);
 
         canvas.width = Math.max(1, Math.round(width * dpr));
         canvas.height = Math.max(1, Math.round(height * dpr));
@@ -2256,6 +2933,7 @@
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         buildParticles();
+        drawStatic();
       }
 
       function buildParticles() {
@@ -2263,19 +2941,15 @@
         dust.length = 0;
         seed = 9137;
 
-        // Scale particle density to the device so phones keep the same visual character
-        // without carrying the desktop particle workload.
         const activeRibbonCount = width <= 480 ? 3 : width <= 767 ? 4 : ribbonCount;
         const activeParticleCount = width <= 480 ? 125 : width <= 767 ? 165 : particleCount;
 
-        // Several dense sinusoidal ribbons form the broad "data fabric".
         for (let r = 0; r < activeRibbonCount; r++) {
           const particles = [];
           for (let i = 0; i < activeParticleCount; i++) {
             particles.push({
               x: random(),
               spread: (random() - 0.5) * (r === 0 ? 12 : 20 + r * 3),
-              phase: random() * Math.PI * 2,
               size: 0.45 + random() * (r === 0 ? 1.35 : 1.05),
               alpha: 0.18 + random() * 0.62,
               speed: 0.176 + random() * 0.144
@@ -2284,7 +2958,6 @@
           ribbons.push(particles);
         }
 
-        // Sparse atmospheric particles around the main field.
         const dustCount = Math.min(230, Math.max(90, Math.floor(width / 7)));
         for (let i = 0; i < dustCount; i++) {
           dust.push({
@@ -2304,60 +2977,34 @@
       }
 
       function colorAt(x, alpha) {
-        // The accent color on the left gradually blends through its own pale
-        // tint into white — accentRGB now follows --accent-rgb live, so this
-        // reads correctly whether the page is in its red or FlexiHeal-green state.
         const p = width ? Math.max(0, Math.min(1, x / width)) : 0;
         const blend = smoothstep(0.42, 0.78, p);
-        const [red, green, blue] = mixc(accentRGB, WHITE, blend);
-
-        // Keep the far-right edge slightly softer.
+        const red = Math.round(accentRGB[0] + (WHITE[0] - accentRGB[0]) * blend);
+        const green = Math.round(accentRGB[1] + (WHITE[1] - accentRGB[1]) * blend);
+        const blue = Math.round(accentRGB[2] + (WHITE[2] - accentRGB[2]) * blend);
         const edgeFade = 0.55 + 0.45 * smoothstep(0.72, 0.98, p);
-        return `rgba(${red}, ${green}, ${blue}, ${alpha * edgeFade})`;
+        return `rgba(${red},${green},${blue},${alpha * edgeFade})`;
       }
 
       function waveCenter(x, t, ribbon) {
-        // Cursor position over the divider gently tilts the whole field.
         const mid = height * 0.50 + (pointerX - 0.5) * height * 0.20;
         const boost = 1 + turbulence * 0.7;
         const baseAmp = height * (0.11 + ribbon * 0.012) * boost;
 
-        // Large slow undulation + secondary wave creates a flowing mesh.
         const primary =
-          Math.sin(x * (0.0072 + ribbon * 0.0007) + t * (1.02 + ribbon * 0.055) + ribbon * 0.72)
-          * baseAmp;
-
+          Math.sin(x * (0.0072 + ribbon * 0.0007) + t * (1.02 + ribbon * 0.055) + ribbon * 0.72) * baseAmp;
         const secondary =
-          Math.sin(x * 0.0145 - t * 0.62 + ribbon * 1.18)
-          * height * 0.035 * boost;
-
+          Math.sin(x * 0.0145 - t * 0.62 + ribbon * 1.18) * height * 0.035 * boost;
         const tertiary =
-          Math.sin(x * 0.0031 + t * 0.34 + ribbon)
-          * height * 0.028 * boost;
-
+          Math.sin(x * 0.0031 + t * 0.34 + ribbon) * height * 0.028 * boost;
         const ribbonOffset = (ribbon - 2) * height * 0.035;
 
         return mid + primary + secondary + tertiary + ribbonOffset;
       }
 
-      function draw(now) {
-        if (!lastTime) lastTime = now;
-        const dt = Math.min(34, now - lastTime);
-        lastTime = now;
-
-        if (!reducedMotion) {
-          time += dt * 0.001 * (1 + turbulence * 1.5);
-          pointerX += (targetPointerX - pointerX) * 0.045;
-          readAccent();
-
-          // Decay back to ambient — roughly a second to fully settle.
-          turbulence *= 0.93;
-          if (turbulence < 0.001) turbulence = 0;
-        }
-
+      function render() {
         ctx.clearRect(0, 0, width, height);
 
-        // Subtle vertical depth haze behind the particles.
         const haze = ctx.createLinearGradient(0, height * 0.12, 0, height * 0.88);
         haze.addColorStop(0, 'rgba(0,0,0,0)');
         haze.addColorStop(0.48, 'rgba(20,20,20,.20)');
@@ -2365,32 +3012,25 @@
         ctx.fillStyle = haze;
         ctx.fillRect(0, 0, width, height);
 
-        // Fine background dust flows at different speeds.
         for (const p of dust) {
-          let x = ((p.x * width + time * p.speed * width) % (width + 30) + (width + 30)) % (width + 30) - 15;
+          const x = ((p.x * width + time * p.speed * width) % (width + 30) + (width + 30)) % (width + 30) - 15;
           const y = p.y * height + Math.sin(time * 0.7 + p.phase) * 3.5;
-
           ctx.fillStyle = colorAt(x, p.alpha);
           ctx.beginPath();
           ctx.arc(x, y, p.size, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        // Draw the particle ribbons from rear to front for a layered depth effect.
         for (let r = ribbons.length - 1; r >= 0; r--) {
           const ribbon = ribbons[r];
-
           for (const p of ribbon) {
-            let x = ((p.x * width + time * p.speed * width) % (width + 45) + (width + 45)) % (width + 45) - 22;
-            let y = waveCenter(x, time, r) + p.spread;
-
-            // Narrow the field at the outer edges, keeping the visual mass in the center.
+            const x = ((p.x * width + time * p.speed * width) % (width + 45) + (width + 45)) % (width + 45) - 22;
+            const y = waveCenter(x, time, r) + p.spread;
             const edge = Math.min(
               smoothstep(0.02, 0.16, x / width),
               smoothstep(0.98, 0.84, x / width)
             );
             const alpha = p.alpha * (0.35 + edge * 0.75) * (r === 0 ? 1 : 0.72);
-
             ctx.fillStyle = colorAt(x, alpha);
             ctx.beginPath();
             ctx.arc(x, y, p.size, 0, Math.PI * 2);
@@ -2398,9 +3038,17 @@
           }
         }
 
-        // A few fine strands trace the wave without turning it back into a line.
         ctx.save();
         ctx.globalCompositeOperation = 'screen';
+
+        const c0 = accentRGB;
+        const c1 = mixc(accentRGB, WHITE, 0.55);
+        const c2 = mixc(accentRGB, WHITE, 0.85);
+        const strand = ctx.createLinearGradient(0, 0, width, 0);
+        strand.addColorStop(0, `rgba(${c0.join(',')},.38)`);
+        strand.addColorStop(.42, `rgba(${c1.join(',')},.20)`);
+        strand.addColorStop(.68, `rgba(${c2.join(',')},.24)`);
+        strand.addColorStop(1, `rgba(${WHITE.join(',')},.10)`);
 
         for (let r = 0; r < 3; r++) {
           ctx.beginPath();
@@ -2409,31 +3057,16 @@
             if (x === 0) ctx.moveTo(x, y);
             else ctx.lineTo(x, y);
           }
-
-          const c0 = accentRGB;
-          const c1 = mixc(accentRGB, WHITE, 0.55);
-          const c2 = mixc(accentRGB, WHITE, 0.85);
-
-          const strand = ctx.createLinearGradient(0, 0, width, 0);
-          strand.addColorStop(0, `rgba(${c0.join(',')},.38)`);
-          strand.addColorStop(.42, `rgba(${c1.join(',')},.20)`);
-          strand.addColorStop(.68, `rgba(${c2.join(',')},.24)`);
-          strand.addColorStop(1, `rgba(${WHITE.join(',')},.10)`);
-
           ctx.strokeStyle = strand;
           ctx.lineWidth = r === 0 ? 0.75 : 0.5;
           ctx.stroke();
         }
 
-        // Larger signal points periodically emerge from the particle field, and
-        // nearby ones link into a light neural-graph overlay — a small nod to
-        // the AI/ML thread running through the rest of the site.
         const nodeCount = Math.max(8, Math.floor(width / 150));
         const nodePts = [];
         for (let i = 0; i < nodeCount; i++) {
           const nx = ((i / nodeCount) * width + time * 34) % (width + 90) - 45;
-          const ny = waveCenter(nx, time, 1);
-          nodePts.push({ x: nx, y: ny, i });
+          nodePts.push({ x: nx, y: waveCenter(nx, time, 1), i });
         }
 
         ctx.lineWidth = 0.6;
@@ -2441,11 +3074,9 @@
         for (let i = 0; i < nodePts.length; i++) {
           for (let j = i + 1; j < Math.min(i + 3, nodePts.length); j++) {
             const a = nodePts[i], b = nodePts[j];
-            const dx = a.x - b.x, dy = a.y - b.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+            const dist = Math.hypot(a.x - b.x, a.y - b.y);
             if (dist < linkDist) {
-              const linkT = 1 - dist / linkDist;
-              ctx.strokeStyle = colorAt((a.x + b.x) / 2, linkT * 0.30);
+              ctx.strokeStyle = colorAt((a.x + b.x) / 2, (1 - dist / linkDist) * 0.30);
               ctx.beginPath();
               ctx.moveTo(a.x, a.y);
               ctx.lineTo(b.x, b.y);
@@ -2457,12 +3088,10 @@
         for (const p of nodePts) {
           const pulse = 0.72 + Math.sin(time * 2.2 + p.i) * 0.18;
           const leftSide = p.x < width * 0.62;
-
           ctx.shadowBlur = width <= 767 ? 4 : 9;
           ctx.shadowColor = leftSide
             ? `rgba(${accentRGB[0]},${accentRGB[1]},${accentRGB[2]},.42)`
             : 'rgba(245,245,246,.24)';
-
           ctx.fillStyle = colorAt(p.x, pulse);
           ctx.beginPath();
           ctx.arc(p.x, p.y, 1.6 + (p.i % 3) * 0.55, 0, Math.PI * 2);
@@ -2471,20 +3100,81 @@
 
         ctx.shadowBlur = 0;
         ctx.restore();
+      }
 
-        if (!reducedMotion) requestAnimationFrame(draw);
+      function drawStatic() {
+        if (!width || !height) return;
+        render();
+      }
+
+      function schedule() {
+        if (!reducedMotion && isVisible && !document.hidden && rafId === null) {
+          rafId = requestAnimationFrame(draw);
+        }
+      }
+
+      function draw(now) {
+        rafId = null;
+        if (!isVisible || document.hidden || reducedMotion) return;
+
+        if (!lastTime) lastTime = now;
+        const dt = Math.min(34, now - lastTime);
+        lastTime = now;
+
+        if (!lastDraw || now - lastDraw >= targetFrameMs - 0.5) {
+          lastDraw = now;
+          time += dt * 0.001 * (1 + turbulence * 1.5);
+          pointerX += (targetPointerX - pointerX) * 0.045;
+
+          if (now >= accentCheckAt) {
+            readAccent();
+            accentCheckAt = now + 250;
+          }
+
+          turbulence *= 0.93;
+          if (turbulence < 0.001) turbulence = 0;
+          render();
+        }
+
+        schedule();
       }
 
       resize();
-      window.addEventListener('resize', resize, { passive: true });
-      window.addEventListener('orientationchange', () => setTimeout(resize, 80), { passive: true });
+      window.addEventListener('resize', queueResize, { passive: true });
+      window.addEventListener('orientationchange', queueResize, { passive: true });
 
       if ('ResizeObserver' in window) {
-        const waveResizeObserver = new ResizeObserver(resize);
+        const waveResizeObserver = new ResizeObserver(queueResize);
         waveResizeObserver.observe(divider);
       }
 
-      draw(0);
+      if ('IntersectionObserver' in window) {
+        const visibilityObserver = new IntersectionObserver((entries) => {
+          isVisible = entries[0].isIntersecting;
+          if (isVisible) {
+            lastTime = performance.now();
+            lastScrollY = window.scrollY || 0;
+            schedule();
+          } else if (rafId !== null) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+        }, { threshold: 0, rootMargin: '180px 0px 180px 0px' });
+        visibilityObserver.observe(divider);
+      } else {
+        isVisible = true;
+        schedule();
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        } else if (!document.hidden) {
+          lastTime = performance.now();
+          schedule();
+        }
+      }, { passive: true });
     })();
 
   </script>
