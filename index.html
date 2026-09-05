@@ -30,7 +30,7 @@
   <meta name="twitter:image" content="https://darshkumar07.github.io/darsh-portfolio/social-preview.png">
   <meta name="twitter:image:alt" content="Darsh Kumar Choudhary — AI/ML Engineer & Developer">
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self';">
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self';">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
@@ -111,6 +111,27 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -120px;
+      left: 16px;
+      z-index: 1000002;
+      padding: 10px 18px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .5);
+      transition: top .2s ease;
+    }
+
+    .skip-link:focus {
+      top: 16px;
     }
 
     .wrap {
@@ -213,33 +234,61 @@
     }
 
     .nav-social {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 9px;
+      gap: 7px;
+      padding: 5px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .08);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      letter-spacing: .02em;
-      color: var(--ink);
+      font-size: 11.5px;
+      letter-spacing: .03em;
+      color: var(--ink-soft);
       white-space: nowrap;
-      transition: color .2s ease, transform .2s ease;
+      text-decoration: none;
+      transition: color .25s ease, background-color .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+    }
+
+    .nav-social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      transition: transform .25s ease, color .25s ease;
     }
 
     .nav-social svg {
-      width: 17px;
-      height: 17px;
-      fill: none;
-      stroke: var(--accent);
-      stroke-width: 1.7;
+      width: 14px;
+      height: 14px;
+      display: block;
+      fill: currentColor;
     }
 
-    .nav-social svg circle:last-child {
-      fill: var(--accent);
-      stroke: none;
+    .nav-social .nav-social-arrow {
+      font-size: 10px;
+      opacity: .6;
+      transition: transform .25s ease, opacity .25s ease;
     }
 
-    .nav-social:hover {
-      color: var(--accent);
+    .nav-social:hover,
+    .nav-social:focus-visible {
+      color: #fff;
+      background: rgba(var(--accent-rgb), .12);
+      border-color: rgba(var(--accent-rgb), .45);
+      box-shadow: 0 0 16px rgba(var(--accent-rgb), .22);
       transform: translateY(-1px);
+    }
+
+    .nav-social:hover .nav-social-icon {
+      transform: scale(1.08);
+    }
+
+    .nav-social:hover .nav-social-arrow {
+      opacity: 1;
+      transform: translate(1px, -1px);
     }
 
     .nav-links {
@@ -333,18 +382,26 @@
       height: 100%;
       transform: translate3d(-50%, 0, 0);
       background-image:
-        linear-gradient(to right, rgba(255, 255, 255, .13) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, .13) 1px, transparent 1px),
-        linear-gradient(to right, rgba(var(--accent-rgb), .20) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(var(--accent-rgb), .20) 1px, transparent 1px);
-      background-size: 52px 52px, 52px 52px, 260px 260px, 260px 260px;
+        radial-gradient(rgba(255, 255, 255, .20) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255, 255, 255, .05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, .05) 1px, transparent 1px),
+        linear-gradient(to right, rgba(var(--accent-rgb), .16) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(var(--accent-rgb), .16) 1px, transparent 1px);
+      background-size:
+        38px 38px,
+        38px 38px,
+        38px 38px,
+        190px 190px,
+        190px 190px;
       background-position: center center;
       background-repeat: repeat;
-      opacity: .90;
-      filter: brightness(1) contrast(1.12);
+      opacity: .88;
+      filter: brightness(1.05) contrast(1.15);
       z-index: 0;
       pointer-events: none;
       will-change: transform;
+      mask-image: radial-gradient(ellipse 72% 65% at 50% 45%, black 22%, rgba(0, 0, 0, .45) 58%, transparent 86%);
+      -webkit-mask-image: radial-gradient(ellipse 72% 65% at 50% 45%, black 22%, rgba(0, 0, 0, .45) 58%, transparent 86%);
     }
 
     .photo-grid::after {
@@ -352,9 +409,173 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(0, 0, 0, .04), rgba(0, 0, 0, .16)),
-        radial-gradient(circle at 50% 42%, transparent 24%, rgba(0, 0, 0, .18) 100%);
+        radial-gradient(ellipse at 50% 45%, rgba(var(--accent-rgb), .08) 0%, transparent 68%),
+        linear-gradient(180deg, rgba(8, 9, 11, .2) 0%, transparent 25%, transparent 75%, rgba(8, 9, 11, .85) 100%);
       pointer-events: none;
+    }
+
+    /* Tactical HUD & Coordinate Reticle behind Profile */
+    .photo-hud {
+      position: absolute;
+      inset: -32px;
+      pointer-events: none;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform .25s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .hud-glow {
+      position: absolute;
+      width: 82%;
+      height: 75%;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(var(--accent-rgb), .22) 0%, rgba(var(--accent-rgb), .06) 50%, transparent 72%);
+      filter: blur(24px);
+      z-index: 0;
+    }
+
+    .hud-rings {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .hud-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hud-ring-1 {
+      width: 440px;
+      height: 440px;
+      border: 1px dashed rgba(var(--accent-rgb), .22);
+      animation: hudRotateClockwise 52s linear infinite;
+    }
+
+    .hud-ring-2 {
+      width: 330px;
+      height: 330px;
+      border: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .hud-ring-3 {
+      width: 530px;
+      height: 530px;
+      border: 1px dashed rgba(255, 255, 255, .04);
+      animation: hudRotateCounter 68s linear infinite;
+    }
+
+    @keyframes hudRotateClockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes hudRotateCounter {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    .hud-axis-x {
+      position: absolute;
+      left: -6%;
+      right: -6%;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, .04) 15%, rgba(var(--accent-rgb), .28) 45%, rgba(var(--accent-rgb), .28) 55%, rgba(255, 255, 255, .04) 85%, transparent 100%);
+      z-index: 1;
+    }
+
+    .hud-axis-y {
+      position: absolute;
+      top: -4%;
+      bottom: -4%;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, .04) 15%, rgba(var(--accent-rgb), .28) 45%, rgba(var(--accent-rgb), .28) 55%, rgba(255, 255, 255, .04) 85%, transparent 100%);
+      z-index: 1;
+    }
+
+    .hud-corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: rgba(var(--accent-rgb), .45);
+      border-style: solid;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .hud-corner.tl {
+      top: 14px;
+      left: 14px;
+      border-width: 2px 0 0 2px;
+    }
+
+    .hud-corner.tr {
+      top: 14px;
+      right: 14px;
+      border-width: 2px 2px 0 0;
+    }
+
+    .hud-corner.bl {
+      bottom: 14px;
+      left: 14px;
+      border-width: 0 0 2px 2px;
+    }
+
+    .hud-corner.br {
+      bottom: 14px;
+      right: 14px;
+      border-width: 0 2px 2px 0;
+    }
+
+    .hud-telemetry {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      color: rgba(255, 255, 255, .32);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .hud-tag-tl {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: rgba(var(--accent-rgb), .75);
+    }
+
+    .hud-tag-tr {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      text-align: right;
+    }
+
+    .hud-tag-bl {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+    }
+
+    .hud-tag-br {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      text-align: right;
+      color: rgba(var(--accent-rgb), .75);
     }
 
     .grid-scan {
@@ -823,7 +1044,10 @@
     }
 
     .contact-list {
-      border-top: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 14px;
     }
 
     .contact-row {
@@ -833,104 +1057,130 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 24px 16px;
-      margin: 0 -16px;
-      border-bottom: 1px solid var(--line);
+      padding: 22px 28px;
+      margin: 0;
+      border-radius: 20px;
+      background: rgba(12, 14, 18, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       color: var(--ink);
-      transition: color .45s ease, padding-left .45s cubic-bezier(.22, 1, .36, 1),
-        border-color .45s ease, box-shadow .45s ease;
+      text-decoration: none;
+      transition: border-color .35s cubic-bezier(.22, 1, .36, 1),
+                  box-shadow .35s cubic-bezier(.22, 1, .36, 1),
+                  background-color .35s ease,
+                  transform .35s cubic-bezier(.22, 1, .36, 1);
     }
 
     .contact-row::after {
       content: '';
       position: absolute;
       inset: 0;
-      z-index: -2;
-      background: linear-gradient(90deg, rgba(228, 59, 59, .14), rgba(228, 59, 59, .035) 52%, transparent 82%);
+      z-index: 0;
+      background: radial-gradient(circle at 18% 50%, rgba(var(--accent-rgb), 0.12) 0%, transparent 65%);
       opacity: 0;
-      transform: translateX(-8%);
-      transition: opacity .45s ease, transform .65s cubic-bezier(.22, 1, .36, 1);
+      pointer-events: none;
+      transition: opacity .4s ease;
     }
 
     .contact-row:hover,
     .contact-row:focus-visible {
-      color: #fff;
-      padding-left: 26px;
-      border-bottom-color: rgba(228, 59, 59, .42);
-      box-shadow: inset 3px 0 0 var(--accent), 0 0 30px rgba(228, 59, 59, .07);
+      border-color: rgba(var(--accent-rgb), 0.65);
+      background-color: rgba(18, 20, 27, 0.88);
+      box-shadow: 0 0 35px rgba(var(--accent-rgb), 0.18), inset 0 0 20px rgba(var(--accent-rgb), 0.05);
+      transform: translateY(-2px);
       outline: none;
     }
 
     .contact-row:hover::after,
     .contact-row:focus-visible::after {
       opacity: 1;
-      transform: translateX(0);
     }
 
-    .contact-row > *:not(.contact-wave) {
+    .contact-row > * {
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
-    .contact-row .c-label {
+    .contact-row .c-left {
       display: flex;
-      align-items: baseline;
-      gap: 16px;
+      align-items: center;
+      gap: 20px;
     }
 
-    .contact-row .c-index {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
-      color: var(--ink-soft);
-      transition: color .35s ease, transform .45s cubic-bezier(.22, 1, .36, 1);
+    .contact-row .c-icon-badge {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.82);
+      flex-shrink: 0;
+      transition: background-color .35s ease, border-color .35s ease, color .35s ease, transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease;
     }
 
-    .contact-row:hover .c-index,
-    .contact-row:focus-visible .c-index {
+    .contact-row:hover .c-icon-badge,
+    .contact-row:focus-visible .c-icon-badge {
+      background: rgba(var(--accent-rgb), 0.12);
+      border-color: rgba(var(--accent-rgb), 0.5);
       color: var(--accent);
-      transform: translateY(-1px);
+      transform: scale(1.06);
+      box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.25);
+    }
+
+    .contact-row .c-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .contact-row .c-kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.9;
     }
 
     .contact-row .c-name {
       font-family: 'Sora', sans-serif;
-      font-style: normal;
+      font-size: clamp(20px, 2.5vw, 24px);
       font-weight: 600;
-      font-size: clamp(22px, 3.4vw, 30px);
-      letter-spacing: -.035em;
-      transition: color .35s ease, text-shadow .45s ease;
-    }
-
-    .contact-row:hover .c-name,
-    .contact-row:focus-visible .c-name {
-      color: var(--accent);
-      text-shadow: 0 0 18px rgba(228, 59, 59, .18);
+      letter-spacing: -.025em;
+      color: #fff;
+      line-height: 1.2;
     }
 
     .contact-row .c-handle {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 12.5px;
       color: var(--ink-soft);
-      transition: color .35s ease, transform .45s cubic-bezier(.22, 1, .36, 1);
+      letter-spacing: 0.02em;
+      transition: color .3s ease;
     }
 
     .contact-row:hover .c-handle,
     .contact-row:focus-visible .c-handle {
-      color: rgba(255, 255, 255, .82);
-      transform: translateX(4px);
+      color: rgba(255, 255, 255, 0.85);
     }
 
     .contact-row .c-arrow {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 18px;
+      font-size: 20px;
       color: var(--ink-soft);
       transform: translateX(0);
-      transition: transform .45s cubic-bezier(.22, 1, .36, 1), color .35s ease, font-size .2s ease, letter-spacing .2s ease;
+      transition: transform .35s cubic-bezier(.22, 1, .36, 1), color .3s ease;
     }
 
     .contact-row:hover .c-arrow,
     .contact-row:focus-visible .c-arrow {
       color: var(--accent);
-      transform: translateX(8px);
+      transform: translateX(6px);
     }
 
     .contact-row .c-arrow.is-copied {
@@ -941,122 +1191,8 @@
       transform: translateX(0);
     }
 
-    /* Layered red data-wave inspired by flowing signal ribbons. */
-    .contact-wave {
-      position: absolute;
-      right: 74px;
-      top: 50%;
-      z-index: 0;
-      width: min(34vw, 420px);
-      height: 104px;
-      transform: translateY(-50%) scaleX(.9);
-      transform-origin: left bottom;
-      opacity: 0;
-      pointer-events: none;
-      overflow: visible;
-      transition: opacity .45s ease, transform .75s cubic-bezier(.22, 1, .36, 1);
-    }
-
-    .contact-wave svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-      overflow: visible;
-    }
-
-    .contact-wave path {
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      vector-effect: non-scaling-stroke;
-      will-change: stroke-dashoffset, opacity;
-    }
-
-    /* Soft ribbon layers create depth similar to a flowing data stream. */
-    .contact-wave .wave-ribbon-back {
-      stroke: rgba(228, 59, 59, .14);
-      stroke-width: 1.5;
-      stroke-dasharray: 2 7;
-      filter: blur(.2px);
-    }
-
-    .contact-wave .wave-ribbon-mid {
-      stroke: rgba(228, 59, 59, .30);
-      stroke-width: 1.15;
-      stroke-dasharray: 4 9;
-    }
-
-    .contact-wave .wave-ribbon-fine {
-      stroke: rgba(255, 108, 108, .48);
-      stroke-width: .8;
-      stroke-dasharray: 2 12;
-    }
-
-    /* The primary data stream carries a brighter pulse left-to-right. */
-    .contact-wave .wave-stream {
-      stroke: var(--accent);
-      stroke-width: 1.8;
-      stroke-dasharray: 26 34;
-      filter: drop-shadow(0 0 4px rgba(228, 59, 59, .55));
-    }
-
-    .contact-wave .wave-signal {
-      stroke: rgba(255, 225, 225, .72);
-      stroke-width: .75;
-      stroke-dasharray: 5 55;
-      filter: drop-shadow(0 0 5px rgba(228, 59, 59, .8));
-    }
-
-    .contact-row:hover .contact-wave,
-    .contact-row:focus-visible .contact-wave {
-      opacity: .95;
-      transform: translateY(-50%) scaleX(1);
-    }
-
-    .contact-row:hover .contact-wave .wave-ribbon-back,
-    .contact-row:focus-visible .contact-wave .wave-ribbon-back {
-      animation: dataRibbonFlow 3.4s linear infinite;
-    }
-
-    .contact-row:hover .contact-wave .wave-ribbon-mid,
-    .contact-row:focus-visible .contact-wave .wave-ribbon-mid {
-      animation: dataRibbonFlow 2.5s linear infinite reverse;
-    }
-
-    .contact-row:hover .contact-wave .wave-ribbon-fine,
-    .contact-row:focus-visible .contact-wave .wave-ribbon-fine {
-      animation: dataRibbonFlow 1.9s linear infinite;
-    }
-
-    .contact-row:hover .contact-wave .wave-stream,
-    .contact-row:focus-visible .contact-wave .wave-stream {
-      animation: dataStreamFlow 1.45s linear infinite;
-    }
-
-    .contact-row:hover .contact-wave .wave-signal,
-    .contact-row:focus-visible .contact-wave .wave-signal {
-      animation: dataSignalFlow 1.05s linear infinite;
-    }
-
-    @keyframes dataRibbonFlow {
-      from { stroke-dashoffset: 0; }
-      to { stroke-dashoffset: -120; }
-    }
-
-    @keyframes dataStreamFlow {
-      from { stroke-dashoffset: 0; }
-      to { stroke-dashoffset: -120; }
-    }
-
-    @keyframes dataSignalFlow {
-      from { stroke-dashoffset: 0; opacity: .28; }
-      45% { opacity: 1; }
-      to { stroke-dashoffset: -120; opacity: .28; }
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      .contact-row, .contact-row *, .contact-wave i { animation: none !important; }
-      .contact-row:hover .contact-wave, .contact-row:focus-visible .contact-wave { opacity: .38; }
+      .contact-row, .contact-row * { animation: none !important; }
     }
 
     footer {
@@ -1072,14 +1208,30 @@
       letter-spacing: 0.04em;
     }
 
-    .footer-logo {
+    .footer-logo-link {
       position: absolute;
       left: 50%;
       bottom: 20px;
       width: 64px;
       height: 64px;
-      object-fit: contain;
       transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: transform .25s cubic-bezier(.22, 1, .36, 1), filter .25s ease;
+    }
+
+    .footer-logo-link:hover,
+    .footer-logo-link:focus-visible {
+      transform: translateX(-50%) scale(1.08);
+      filter: drop-shadow(0 0 16px rgba(228, 59, 59, .4));
+    }
+
+    .footer-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
       filter: drop-shadow(0 0 12px rgba(228, 59, 59, .18));
       pointer-events: none;
     }
@@ -1339,8 +1491,8 @@
       }
 
       .mobile-nav-close {
-        width: 38px;
-        height: 38px;
+        width: 44px;
+        height: 44px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1599,29 +1751,60 @@
         min-width: 0;
       }
 
-      .contact-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 8px 12px;
-        min-height: 52px;
-        padding: 16px 12px;
+      .photo-hud {
+        inset: -16px;
+      }
+      .hud-ring-1 { width: 340px; height: 340px; }
+      .hud-ring-2 { width: 260px; height: 260px; }
+      .hud-ring-3 { width: 420px; height: 420px; }
+      .hud-corner { width: 16px; height: 16px; }
+      .hud-telemetry { font-size: 8.5px; }
+
+      .contact-list {
+        gap: 12px;
       }
 
-      .contact-row .c-label {
-        flex: 0 0 auto;
+      .contact-row {
+        padding: 16px 18px;
+        border-radius: 16px;
+        position: relative;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .contact-row .c-left {
+        gap: 14px;
+        min-width: 0;
+        flex: 1 1 auto;
+      }
+
+      .contact-row .c-sep {
+        display: none;
+      }
+
+      .contact-row .c-icon-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        flex-shrink: 0;
+      }
+
+      .contact-row .c-info {
+        min-width: 0;
+      }
+
+      .contact-row .c-name {
+        font-size: 18px;
       }
 
       .contact-row .c-handle {
-        flex: 1 1 auto;
-        text-align: right;
-        font-size: 11.5px;
-        overflow-wrap: anywhere;
-      }
-
-      .contact-row .c-arrow {
-        flex: 0 0 auto;
+        font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 180px;
       }
 
       footer {
@@ -1642,7 +1825,7 @@
         text-align: right;
       }
 
-      .footer-logo {
+      .footer-logo-link {
         width: 56px;
         height: 56px;
         bottom: 20px;
@@ -1742,11 +1925,27 @@
         font-size: 12.5px;
       }
 
+      .photo-hud {
+        inset: -10px;
+      }
+      .hud-ring-1 { width: 280px; height: 280px; }
+      .hud-ring-2 { width: 220px; height: 220px; }
+      .hud-ring-3 { display: none; }
+      .hud-corner { width: 14px; height: 14px; }
+      .hud-telemetry { font-size: 8px; }
+
+      .contact-row {
+        padding: 14px 14px;
+      }
+      .contact-row .c-handle {
+        max-width: 140px;
+      }
+
       footer {
         font-size: 8.25px;
       }
 
-      .footer-logo {
+      .footer-logo-link {
         width: 50px;
         height: 50px;
       }
@@ -1990,8 +2189,11 @@
       html,
       body,
       a,
-      button {
-        cursor: none;
+      button,
+      [role="button"],
+      .footer-logo-link,
+      .site-logo-link {
+        cursor: none !important;
       }
 
       .custom-cursor-dot,
@@ -2187,16 +2389,16 @@
 
 
     /* ---------- INTRO ANIMATION ---------- */
-    /* Reserve scrollbar space permanently so removing scroll during the intro
-       cannot shift the entire website horizontally at the final reveal. */
+    /* Reserve vertical scrollbar space permanently so the document clientWidth
+       never changes before, during, or after the intro animation. */
     html {
+      overflow-y: scroll;
       scrollbar-gutter: stable;
     }
 
     body.intro-active {
-      overflow: hidden;
-      height: 100vh;
-      padding-right: var(--intro-scrollbar-compensation, 0px);
+      touch-action: none;
+      user-select: none;
     }
 
     #intro-overlay {
@@ -2384,8 +2586,11 @@
 
     .intro-text.hide-text {
       opacity: 0;
-      clip-path: inset(0 0 0 100%);
-      transition: clip-path 0.35s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.35s ease;
+      transform: translateX(-40px);
+      letter-spacing: 0.01em;
+      filter: blur(4px);
+      clip-path: inset(0 0 0 0);
+      transition: opacity 0.35s ease, filter 0.35s ease;
     }
 
     .intro-text.hide-text .intro-laser-scanner {
@@ -2412,12 +2617,22 @@
         width: max-content;
         max-width: calc(100vw - 32px);
         text-align: center;
-        white-space: normal;
+        white-space: nowrap !important;
+        letter-spacing: 0.02em !important;
+        font-size: clamp(17px, 5.2vw, 24px);
         line-height: 1.2;
       }
 
-      .intro-text.reveal-text {
-        transform: translateX(-50%);
+      .intro-text.reveal-text,
+      .intro-text.hide-text {
+        transform: translateX(-50%) !important;
+        letter-spacing: 0.02em !important;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .intro-text {
+        font-size: clamp(15px, 4.8vw, 17px);
       }
     }
 
@@ -2468,6 +2683,8 @@
   <div class="custom-cursor-dot" id="cursorDot" aria-hidden="true"></div>
   <div class="custom-cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
+  <!-- Skip Link for Keyboard Accessibility -->
+  <a href="#main" class="skip-link">Skip to main content</a>
 
   <nav>
     <div class="wrap">
@@ -2476,16 +2693,17 @@
       </a>
       <a class="nav-social" href="https://www.linkedin.com/in/darsh-kumar-choudhary-835374420/" target="_blank"
         rel="noopener noreferrer" aria-label="LinkedIn — Darsh Kumar Choudhary">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-          <path d="M8 10v7"></path>
-          <path d="M8 7.2v.1"></path>
-          <path d="M12 17v-4.1a2.9 2.9 0 0 1 5.8 0V17"></path>
-          <path d="M12 10v7"></path>
-        </svg><span>LinkedIn</span></a>
+        <span class="nav-social-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+          </svg>
+        </span>
+        <span>LinkedIn</span>
+        <span class="nav-social-arrow" aria-hidden="true">↗</span>
+      </a>
       <div class="nav-links">
-        <a href="#work">Work</a>
         <a href="#about">About</a>
+        <a href="#work">Work</a>
         <a href="#contact">Contact</a>
       </div>
       <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
@@ -2504,8 +2722,8 @@
         <button class="mobile-nav-close" id="mobileNavClose" type="button" aria-label="Close navigation menu">✕</button>
       </div>
       <nav class="mobile-nav-links">
-        <a href="#work" class="mobile-nav-link"><span class="m-num">01</span><span class="m-txt">Work</span><span class="m-arrow">→</span></a>
-        <a href="#about" class="mobile-nav-link"><span class="m-num">02</span><span class="m-txt">About</span><span class="m-arrow">→</span></a>
+        <a href="#about" class="mobile-nav-link"><span class="m-num">01</span><span class="m-txt">About</span><span class="m-arrow">→</span></a>
+        <a href="#work" class="mobile-nav-link"><span class="m-num">02</span><span class="m-txt">Work</span><span class="m-arrow">→</span></a>
         <a href="#contact" class="mobile-nav-link"><span class="m-num">03</span><span class="m-txt">Contact</span><span class="m-arrow">→</span></a>
       </nav>
       <div class="mobile-nav-footer">
@@ -2523,6 +2741,26 @@
 
         <div class="photo-stack hero-motion delay-2 hero-parallax">
           <div class="photo-shadow" aria-hidden="true"></div>
+          <div class="photo-hud" id="photoHud" aria-hidden="true">
+            <div class="hud-glow"></div>
+            <div class="hud-rings">
+              <div class="hud-ring hud-ring-1"></div>
+              <div class="hud-ring hud-ring-2"></div>
+              <div class="hud-ring hud-ring-3"></div>
+            </div>
+            <div class="hud-axis-x"></div>
+            <div class="hud-axis-y"></div>
+            <div class="hud-corner tl"></div>
+            <div class="hud-corner tr"></div>
+            <div class="hud-corner bl"></div>
+            <div class="hud-corner br"></div>
+            <div class="hud-telemetry">
+              <span class="hud-tag-tl">SYS.COORD // 12.9716° N</span>
+              <span class="hud-tag-tr">LOC // CMRIT · BLR</span>
+              <span class="hud-tag-bl">MATRIX // 38x190</span>
+              <span class="hud-tag-br">STATUS // ACTIVE</span>
+            </div>
+          </div>
           <div class="photo-card" id="photoCard">
             <img id="profileImage" src="profile.webp" alt="Darsh Kumar Choudhary" fetchpriority="high" decoding="async" width="605" height="1200">
             <span class="photo-tag">CMRIT · Bengaluru</span>
@@ -2551,6 +2789,7 @@
     <canvas id="dataWaveCanvas"></canvas>
   </div>
 
+  <main id="main">
   <section id="about">
     <div class="wrap">
       <h2 class="eyebrow scroll-reveal">About</h2>
@@ -2620,9 +2859,6 @@
         <span class="tag">REST APIs</span>
       </div>
 
-      <p class="project-note scroll-reveal">Designed as a concept — billing, patient management and educational
-        resources are also
-        part of the platform scope.</p>
     </div>
   </section>
 
@@ -2636,73 +2872,69 @@
 
       <div class="contact-list scroll-reveal">
         <a class="contact-row scroll-reveal" href="mailto:darsh.aiml25@cmrit.ac.in" id="emailRow">
-          <span class="contact-wave" aria-hidden="true">
-            <svg viewBox="0 0 420 92" preserveAspectRatio="none">
-              <!-- Diagonal data stream: bottom-left flowing toward top-right. -->
-              <path class="wave-ribbon-back" d="M-12 88 C28 73 49 91 88 77 S142 61 177 69 S228 42 263 52 S316 17 350 30 S395 11 432 4" />
-              <path class="wave-ribbon-back" d="M-10 82 C24 67 55 88 95 72 S146 54 184 62 S235 36 272 48 S322 13 360 23 S402 7 432 0" />
-              <path class="wave-ribbon-mid" d="M-10 91 C31 78 61 85 101 70 S152 58 192 65 S246 39 282 49 S331 20 368 28 S407 10 432 6" />
-              <path class="wave-ribbon-mid" d="M-12 75 C21 61 53 80 91 67 S140 48 178 56 S229 31 268 42 S317 11 355 20 S398 5 432 -2" />
-              <path class="wave-ribbon-fine" d="M-10 86 C27 71 52 95 93 76 S144 57 182 66 S236 40 274 53 S325 16 361 29 S403 9 432 3" />
-              <path class="wave-ribbon-fine" d="M-10 79 C28 66 58 86 99 69 S149 50 188 60 S241 34 279 45 S329 12 367 22 S406 6 432 -1" />
-              <path class="wave-ribbon-fine" d="M-10 90 C29 82 63 91 104 74 S158 61 198 70 S252 45 290 55 S338 25 376 33 S411 14 432 9" />
-              <path class="wave-stream" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
-              <path class="wave-signal" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
-            </svg>
-          </span>
-          <span class="c-label"><span class="c-index">01</span><span class="c-name">Email</span></span>
-          <span class="c-handle">darsh.aiml25@cmrit.ac.in</span>
+          <div class="c-left">
+            <div class="c-icon-badge" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </div>
+            <div class="c-info">
+              <span class="c-kicker">// GET IN TOUCH</span>
+              <span class="c-name">Email</span>
+              <span class="c-handle">darsh.aiml25@cmrit.ac.in</span>
+            </div>
+          </div>
           <span class="c-arrow" id="emailArrow">→</span>
         </a>
-        <a class="contact-row scroll-reveal" href="https://www.linkedin.com/in/darsh-kumar-choudhary-835374420"
-          target="_blank" rel="noopener">
-          <span class="contact-wave" aria-hidden="true">
-            <svg viewBox="0 0 420 92" preserveAspectRatio="none">
-              <!-- Diagonal data stream: bottom-left flowing toward top-right. -->
-              <path class="wave-ribbon-back" d="M-12 88 C28 73 49 91 88 77 S142 61 177 69 S228 42 263 52 S316 17 350 30 S395 11 432 4" />
-              <path class="wave-ribbon-back" d="M-10 82 C24 67 55 88 95 72 S146 54 184 62 S235 36 272 48 S322 13 360 23 S402 7 432 0" />
-              <path class="wave-ribbon-mid" d="M-10 91 C31 78 61 85 101 70 S152 58 192 65 S246 39 282 49 S331 20 368 28 S407 10 432 6" />
-              <path class="wave-ribbon-mid" d="M-12 75 C21 61 53 80 91 67 S140 48 178 56 S229 31 268 42 S317 11 355 20 S398 5 432 -2" />
-              <path class="wave-ribbon-fine" d="M-10 86 C27 71 52 95 93 76 S144 57 182 66 S236 40 274 53 S325 16 361 29 S403 9 432 3" />
-              <path class="wave-ribbon-fine" d="M-10 79 C28 66 58 86 99 69 S149 50 188 60 S241 34 279 45 S329 12 367 22 S406 6 432 -1" />
-              <path class="wave-ribbon-fine" d="M-10 90 C29 82 63 91 104 74 S158 61 198 70 S252 45 290 55 S338 25 376 33 S411 14 432 9" />
-              <path class="wave-stream" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
-              <path class="wave-signal" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
-            </svg>
-          </span>
-          <span class="c-label"><span class="c-index">02</span><span class="c-name">LinkedIn</span></span>
-          <span class="c-handle">Darsh Kumar Choudhary</span>
+
+        <a class="contact-row scroll-reveal" href="https://www.linkedin.com/in/darsh-kumar-choudhary-835374420" target="_blank" rel="noopener">
+          <div class="c-left">
+            <div class="c-icon-badge" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+            </div>
+            <div class="c-info">
+              <span class="c-kicker">// LET'S CONNECT</span>
+              <span class="c-name">LinkedIn</span>
+              <span class="c-handle">Darsh Kumar Choudhary</span>
+            </div>
+          </div>
           <span class="c-arrow">→</span>
         </a>
-        <a class="contact-row scroll-reveal" href="https://www.instagram.com/kumar.darsh07" target="_blank"
-          rel="noopener">
-          <span class="contact-wave" aria-hidden="true">
-            <svg viewBox="0 0 420 92" preserveAspectRatio="none">
-              <!-- Diagonal data stream: bottom-left flowing toward top-right. -->
-              <path class="wave-ribbon-back" d="M-12 88 C28 73 49 91 88 77 S142 61 177 69 S228 42 263 52 S316 17 350 30 S395 11 432 4" />
-              <path class="wave-ribbon-back" d="M-10 82 C24 67 55 88 95 72 S146 54 184 62 S235 36 272 48 S322 13 360 23 S402 7 432 0" />
-              <path class="wave-ribbon-mid" d="M-10 91 C31 78 61 85 101 70 S152 58 192 65 S246 39 282 49 S331 20 368 28 S407 10 432 6" />
-              <path class="wave-ribbon-mid" d="M-12 75 C21 61 53 80 91 67 S140 48 178 56 S229 31 268 42 S317 11 355 20 S398 5 432 -2" />
-              <path class="wave-ribbon-fine" d="M-10 86 C27 71 52 95 93 76 S144 57 182 66 S236 40 274 53 S325 16 361 29 S403 9 432 3" />
-              <path class="wave-ribbon-fine" d="M-10 79 C28 66 58 86 99 69 S149 50 188 60 S241 34 279 45 S329 12 367 22 S406 6 432 -1" />
-              <path class="wave-ribbon-fine" d="M-10 90 C29 82 63 91 104 74 S158 61 198 70 S252 45 290 55 S338 25 376 33 S411 14 432 9" />
-              <path class="wave-stream" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
-              <path class="wave-signal" d="M-10 87 C30 72 57 91 98 74 S151 55 190 64 S243 38 281 50 S331 17 369 27 S407 9 432 3" />
-            </svg>
-          </span>
-          <span class="c-label"><span class="c-index">03</span><span class="c-name">Instagram</span></span>
-          <span class="c-handle">@kumar.darsh07</span>
+
+        <a class="contact-row scroll-reveal" href="https://www.instagram.com/kumar.darsh07" target="_blank" rel="noopener">
+          <div class="c-left">
+            <div class="c-icon-badge" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </div>
+            <div class="c-info">
+              <span class="c-kicker">// FOLLOW MY JOURNEY</span>
+              <span class="c-name">Instagram</span>
+              <span class="c-handle">@kumar.darsh07</span>
+            </div>
+          </div>
           <span class="c-arrow">→</span>
         </a>
       </div>
 
       <footer>
         <span>© 2026 Darsh Kumar Choudhary</span>
-        <img class="footer-logo" src="logo.webp" alt="" aria-hidden="true" width="168" height="168">
+        <a href="#top" class="footer-logo-link" aria-label="Back to top">
+          <img class="footer-logo" src="logo.webp" alt="Back to top logo" width="168" height="168">
+        </a>
         <span>Bengaluru, India</span>
       </footer>
     </div>
   </section>
+  </main>
 
   <script>
 
@@ -2718,9 +2950,20 @@
       if (!overlay || !introLogo || !introText || !realLogo || !canvas) return;
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const scrollbarWidth = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
 
-      document.documentElement.style.setProperty('--intro-scrollbar-compensation', `${scrollbarWidth}px`);
+      function preventIntroScroll(e) {
+        e.preventDefault();
+      }
+      function preventIntroKeyScroll(e) {
+        if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Space', 'Home', 'End'].includes(e.code)) {
+          e.preventDefault();
+        }
+      }
+
+      window.addEventListener('wheel', preventIntroScroll, { passive: false });
+      window.addEventListener('touchmove', preventIntroScroll, { passive: false });
+      window.addEventListener('keydown', preventIntroKeyScroll, { passive: false });
+
       document.body.classList.add('intro-active');
       window.scrollTo(0, 0);
 
@@ -2734,7 +2977,9 @@
         realLogo.style.pointerEvents = '';
         overlay.remove();
         document.body.classList.remove('intro-active');
-        document.documentElement.style.removeProperty('--intro-scrollbar-compensation');
+        window.removeEventListener('wheel', preventIntroScroll);
+        window.removeEventListener('touchmove', preventIntroScroll);
+        window.removeEventListener('keydown', preventIntroKeyScroll);
         return;
       }
 
@@ -2973,9 +3218,11 @@
             setTimeout(() => {
               if (animFrameId) cancelAnimationFrame(animFrameId);
               window.removeEventListener('resize', resizeCanvas);
+              window.removeEventListener('wheel', preventIntroScroll);
+              window.removeEventListener('touchmove', preventIntroScroll);
+              window.removeEventListener('keydown', preventIntroKeyScroll);
               overlay.remove();
               document.body.classList.remove('intro-active');
-              document.documentElement.style.removeProperty('--intro-scrollbar-compensation');
             }, 30);
           }
         }
@@ -3003,17 +3250,7 @@
         }, 1500);
       }
 
-      emailRow.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(email).then(showCopied).catch(() => {
-            window.location.href = 'mailto:' + email;
-          });
-          return;
-        }
-
-        // Fallback for browsers without the async Clipboard API.
+      function tryFallback() {
         const ta = document.createElement('textarea');
         ta.value = email;
         ta.style.position = 'fixed';
@@ -3021,12 +3258,29 @@
         document.body.appendChild(ta);
         ta.select();
         try {
-          document.execCommand('copy');
-          showCopied();
+          const successful = document.execCommand('copy');
+          if (successful) {
+            showCopied();
+          } else {
+            window.location.href = 'mailto:' + email;
+          }
         } catch (err) {
           window.location.href = 'mailto:' + email;
         }
         document.body.removeChild(ta);
+      }
+
+      emailRow.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(showCopied).catch(() => {
+            tryFallback();
+          });
+          return;
+        }
+
+        tryFallback();
       });
     })();
 
@@ -3065,6 +3319,7 @@
       const grid = document.getElementById('photoGrid');
       const scan = document.getElementById('gridScan');
       const permBtn = document.getElementById('tiltPermissionBtn');
+      const photoHud = document.getElementById('photoHud');
       const isTouch = window.matchMedia('(hover: none)').matches;
 
       if (reduced || !stage) return;
@@ -3098,6 +3353,10 @@
         if (photoCard) {
           photoCard.style.transform =
             `rotateX(${currentY * -13}deg) rotateY(${currentX * 17}deg)`;
+        }
+        if (photoHud) {
+          photoHud.style.transform =
+            `rotateX(${currentY * -9}deg) rotateY(${currentX * 12}deg) translateZ(-15px)`;
         }
         if (nameEl) {
           nameEl.style.transform =
@@ -3350,9 +3609,9 @@
 
     /* ---------- LOGO BACK-TO-TOP: PREVENT HOVER THEME JITTER ---------- */
     (function () {
-      const logoLink = document.querySelector('.site-logo-link');
+      const logoLinks = document.querySelectorAll('.site-logo-link, .footer-logo-link');
       const flexiCard = document.querySelector('.flexiheal-card');
-      if (!logoLink) return;
+      if (!logoLinks.length) return;
 
       let suppressFlexiHover = false;
       let scrollEndTimer = null;
@@ -3376,7 +3635,7 @@
         });
       }
 
-      logoLink.addEventListener('click', function (event) {
+      function handleBackToTop(event) {
         event.preventDefault();
 
         suppressFlexiHover = true;
@@ -3400,6 +3659,10 @@
           window.removeEventListener('scroll', watchScroll);
           if (window.scrollY <= 1) finishBackToTop();
         }, 1800);
+      }
+
+      logoLinks.forEach(link => {
+        link.addEventListener('click', handleBackToTop);
       });
 
       if ('onscrollend' in window) {
@@ -3800,7 +4063,6 @@
         }
       });
     })();
-
   </script>
 
 </body>
