@@ -30,7 +30,7 @@
   <meta name="twitter:image" content="https://darshkumar07.github.io/darsh-portfolio/social-preview.png">
   <meta name="twitter:image:alt" content="Darsh Kumar Choudhary — AI/ML Engineer & Developer">
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self';">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
@@ -122,6 +122,7 @@
     .eyebrow {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 12.5px;
+      font-weight: 400;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--ink);
@@ -270,6 +271,11 @@
     .nav-links a:hover::after,
     .nav-links a:focus-visible::after {
       right: 0;
+    }
+
+    .mobile-nav-toggle,
+    .mobile-nav-drawer {
+      display: none;
     }
 
     /* ---------- HERO (3D photo + name + quote) ---------- */
@@ -539,7 +545,7 @@
     }
 
     .quote-mark {
-      font-family: 'Manrope', serif;
+      font-family: 'Manrope', sans-serif;
       font-style: normal;
       font-size: 56px;
       line-height: 1;
@@ -549,7 +555,7 @@
     }
 
     blockquote {
-      font-family: 'Manrope', serif;
+      font-family: 'Manrope', sans-serif;
       font-style: normal;
       font-size: clamp(19px, 2.3vw, 24px);
       line-height: 1.42;
@@ -1187,11 +1193,15 @@
 
       nav .wrap {
         height: 62px;
-        grid-template-columns: 1fr auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
 
       nav .site-logo-link {
-        grid-column: 1;
+        flex: 0 0 auto;
+        min-width: 44px;
+        min-height: 44px;
       }
 
       nav .site-logo-nav {
@@ -1204,7 +1214,8 @@
       }
 
       nav .nav-social {
-        grid-column: 2;
+        margin-left: auto;
+        margin-right: 12px;
         font-size: 11px;
         min-height: 44px;
         padding: 10px 0;
@@ -1213,6 +1224,220 @@
       .nav-social svg {
         width: 16px;
         height: 16px;
+      }
+
+      .mobile-nav-toggle {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 44px;
+        height: 44px;
+        background: transparent;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        cursor: pointer;
+        gap: 5px;
+        padding: 0;
+        color: var(--ink);
+        -webkit-tap-highlight-color: transparent;
+        transition: border-color .2s ease, background-color .2s ease;
+      }
+
+      .mobile-nav-toggle:hover,
+      .mobile-nav-toggle:focus-visible {
+        border-color: var(--accent);
+        background: rgba(var(--accent-rgb), .08);
+      }
+
+      .mobile-nav-toggle .bar {
+        width: 19px;
+        height: 1.5px;
+        background: var(--ink);
+        border-radius: 2px;
+        transition: transform .25s cubic-bezier(.22, 1, .36, 1), opacity .2s ease;
+      }
+
+      body.mobile-nav-open .mobile-nav-toggle .bar-top {
+        transform: translateY(6.5px) rotate(45deg);
+      }
+
+      body.mobile-nav-open .mobile-nav-toggle .bar-mid {
+        opacity: 0;
+      }
+
+      body.mobile-nav-open .mobile-nav-toggle .bar-bot {
+        transform: translateY(-6.5px) rotate(-45deg);
+      }
+
+      .mobile-nav-drawer {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity .28s ease, visibility .28s ease;
+      }
+
+      body.mobile-nav-open .mobile-nav-drawer {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      body.mobile-nav-open {
+        overflow: hidden !important;
+      }
+
+      .mobile-nav-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(8, 9, 11, .85);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      .mobile-nav-panel {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: min(85vw, 340px);
+        height: 100%;
+        height: 100dvh;
+        overflow-y: auto;
+        background: #0B0D11;
+        border-left: 1px solid var(--line);
+        padding: 24px 24px 36px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transform: translateX(100%);
+        transition: transform .32s cubic-bezier(.22, 1, .36, 1);
+        box-shadow: -20px 0 60px rgba(0, 0, 0, .6);
+      }
+
+      body.mobile-nav-open .mobile-nav-panel {
+        transform: translateX(0);
+      }
+
+      .mobile-nav-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .mobile-nav-kicker {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+
+      .mobile-nav-close {
+        width: 38px;
+        height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        color: var(--ink-soft);
+        font-size: 15px;
+        cursor: pointer;
+        transition: color .2s ease, border-color .2s ease, transform .2s ease;
+      }
+
+      .mobile-nav-close:hover,
+      .mobile-nav-close:focus-visible {
+        color: var(--accent);
+        border-color: var(--accent);
+        transform: rotate(90deg);
+      }
+
+      .mobile-nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: auto 0;
+        padding: 20px 0;
+      }
+
+      .mobile-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 12px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        font-family: 'Sora', sans-serif;
+        font-size: 22px;
+        font-weight: 500;
+        color: var(--ink);
+        transition: background .2s ease, border-color .2s ease, padding-left .25s ease, color .2s ease;
+      }
+
+      .mobile-nav-link .m-num {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11.5px;
+        color: var(--accent);
+        letter-spacing: .08em;
+      }
+
+      .mobile-nav-link .m-txt {
+        flex: 1;
+      }
+
+      .mobile-nav-link .m-arrow {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 16px;
+        color: var(--ink-soft);
+        opacity: 0;
+        transform: translateX(-6px);
+        transition: opacity .2s ease, transform .2s ease, color .2s ease;
+      }
+
+      .mobile-nav-link:hover,
+      .mobile-nav-link:active,
+      .mobile-nav-link:focus-visible {
+        background: rgba(255, 255, 255, .03);
+        border-color: rgba(var(--accent-rgb), .3);
+        color: #fff;
+        padding-left: 18px;
+      }
+
+      .mobile-nav-link:hover .m-arrow,
+      .mobile-nav-link:active .m-arrow,
+      .mobile-nav-link:focus-visible .m-arrow {
+        opacity: 1;
+        transform: translateX(0);
+        color: var(--accent);
+      }
+
+      .mobile-nav-footer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+      }
+
+      .mobile-nav-sublink {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 12px;
+        color: var(--ink-soft);
+        letter-spacing: .04em;
+        transition: color .2s ease;
+      }
+
+      .mobile-nav-sublink:hover,
+      .mobile-nav-sublink:focus-visible {
+        color: var(--accent);
       }
 
       header.hero {
@@ -1375,9 +1600,28 @@
       }
 
       .contact-row {
-        grid-template-columns: 32px minmax(0, 1fr) auto;
-        gap: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px 12px;
         min-height: 52px;
+        padding: 16px 12px;
+      }
+
+      .contact-row .c-label {
+        flex: 0 0 auto;
+      }
+
+      .contact-row .c-handle {
+        flex: 1 1 auto;
+        text-align: right;
+        font-size: 11.5px;
+        overflow-wrap: anywhere;
+      }
+
+      .contact-row .c-arrow {
+        flex: 0 0 auto;
       }
 
       footer {
@@ -1441,21 +1685,21 @@
       }
 
       .photo-stack {
-        min-height: 440px;
-        height: 440px;
-        width: min(100%, 360px);
+        min-height: 380px;
+        height: 380px;
+        width: min(100%, 340px);
       }
 
       .photo-stack::before {
-        width: 300px;
-        height: 300px;
-        bottom: 28px;
+        width: 280px;
+        height: 280px;
+        bottom: 22px;
       }
 
       .photo-card {
-        height: 440px;
-        width: min(100%, 360px);
-        margin-bottom: -20px;
+        height: 380px;
+        width: min(100%, 340px);
+        margin-bottom: -16px;
       }
 
       .photo-tag {
@@ -1505,6 +1749,99 @@
       .footer-logo {
         width: 50px;
         height: 50px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .photo-stack {
+        min-height: 330px;
+        height: 330px;
+        width: 100%;
+      }
+
+      .photo-card {
+        height: 330px;
+        width: 100%;
+      }
+
+      h1.name-3d {
+        font-size: clamp(34px, 11.5vw, 44px);
+      }
+    }
+
+    /* ---------- MOBILE LANDSCAPE (SHORT VIEWPORTS) ---------- */
+    @media (max-height: 500px) and (orientation: landscape) {
+      header.hero {
+        padding-top: 14px;
+      }
+
+      .hero-stage {
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 20px;
+        padding-bottom: 12px;
+        align-items: center;
+      }
+
+      .photo-stack {
+        min-height: 260px;
+        height: 260px;
+        order: 0;
+        width: 100%;
+      }
+
+      .photo-stack::before {
+        width: 210px;
+        height: 210px;
+        bottom: 16px;
+      }
+
+      .photo-card {
+        width: min(100%, 240px);
+        height: 250px;
+        margin-bottom: 0;
+        top: 0;
+      }
+
+      .hero-text {
+        order: 0;
+        padding-top: 0;
+      }
+
+      h1.name-3d {
+        font-size: clamp(26px, 5.5vw, 38px);
+        margin-top: 6px;
+        line-height: 1.05;
+      }
+
+      .hero-role {
+        margin-top: 8px;
+        font-size: 13px;
+        line-height: 1.45;
+        max-width: 440px;
+      }
+
+      .quote-block {
+        margin-top: 12px;
+        padding-top: 10px;
+      }
+
+      blockquote {
+        font-size: clamp(13px, 2vw, 16px);
+        line-height: 1.35;
+      }
+
+      .quote-mark {
+        font-size: 32px;
+        margin-bottom: -12px;
+      }
+
+      .divider {
+        height: 96px;
+        min-height: 96px;
+      }
+
+      #dataWaveCanvas {
+        height: 96px;
       }
     }
 
@@ -1841,6 +2178,11 @@
         transform: none !important;
         transition: none !important;
       }
+
+      .grid-scan::before {
+        animation: none !important;
+        display: none !important;
+      }
     }
 
 
@@ -1865,32 +2207,19 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Ensure it covers everything seamlessly */
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
+      will-change: clip-path;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
-    .stars-bg {
+    canvas.stars-bg {
       position: absolute;
       inset: 0;
-      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
       z-index: 0;
-    }
-
-    .intro-star {
-      position: absolute;
-      background: #FFFFFF;
-      border-radius: 50%;
-      opacity: 0;
-      box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
-      animation: warpDrift linear forwards;
-    }
-
-    @keyframes warpDrift {
-      0% { transform: scale(0.35) translate3d(0, 10px, 0); opacity: 0.35; }
-      8% { opacity: 0.8; }
-      78% { opacity: 0.8; }
-      100% { transform: scale(1.5) translate3d(0, -50px, 0); opacity: 0; }
     }
 
     .intro-content {
@@ -1910,26 +2239,94 @@
       align-items: center;
     }
 
+    /* Expanding energy shockwave ring behind logo */
+    .intro-logo-shockwave {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(228, 59, 59, 0.85);
+      box-shadow: 0 0 25px rgba(228, 59, 59, 0.45), inset 0 0 15px rgba(228, 59, 59, 0.3);
+      opacity: 0;
+      transform: scale(0.2);
+      pointer-events: none;
+    }
+
+    .intro-logo-shockwave.pulse {
+      animation: shockwavePulse 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes shockwavePulse {
+      0% {
+        opacity: 0.9;
+        transform: scale(0.2);
+      }
+      50% {
+        opacity: 0.6;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2.8);
+      }
+    }
+
     .intro-logo {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 0 20px rgba(228, 59, 59, 0.25));
+      filter: drop-shadow(0 0 20px rgba(228, 59, 59, 0.28));
       /* Initial deep space state */
-      transform: scale(0) translateZ(-500px);
+      transform: scale(0) translateZ(-400px);
       opacity: 0;
-      transition: transform 950ms cubic-bezier(0.22, 1, 0.36, 1), opacity 700ms ease;
-      will-change: transform, opacity, left, top, width, height;
+      transition: transform 750ms cubic-bezier(0.16, 1, 0.3, 1), opacity 550ms ease, filter 750ms ease;
+      will-change: transform, opacity;
       transform-origin: center center;
     }
 
     .intro-logo.reveal-logo {
       transform: scale(1) translateZ(0);
       opacity: 1;
+      filter: drop-shadow(0 0 28px rgba(228, 59, 59, 0.5));
     }
 
     .intro-logo.shift-left {
       transform: translateX(-120px) scale(1);
+    }
+
+    /* Tactile docking snap */
+    .intro-logo.dock-snap {
+      animation: dockSnap 350ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes dockSnap {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.15); filter: drop-shadow(0 0 35px rgba(228, 59, 59, 0.85)); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(228, 59, 59, 0.3)); }
+    }
+
+    /* Docking ripple shockwave emitted from navbar logo */
+    .intro-dock-ripple {
+      position: fixed;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 30px rgba(228, 59, 59, 0.9), inset 0 0 15px rgba(228, 59, 59, 0.6);
+      pointer-events: none;
+      z-index: 1000000;
+      transform: translate(-50%, -50%) scale(0.5);
+      animation: dockRippleAnim 650ms cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes dockRippleAnim {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.4);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(3.5);
+      }
     }
 
     .intro-text {
@@ -1938,31 +2335,63 @@
       transform: translateX(0);
       font-family: 'Sora', sans-serif;
       font-size: clamp(24px, 4vw, 36px);
+      letter-spacing: 0.04em;
       color: var(--ink);
       white-space: nowrap;
       opacity: 0;
-      clip-path: inset(0 100% 0 0); /* Hides text from right to left */
-      transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.8s ease;
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.72s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.45s ease, letter-spacing 0.72s ease;
       will-change: clip-path, opacity;
+      display: inline-flex;
+      align-items: center;
     }
 
     .intro-text .accent-name {
       color: var(--accent);
       font-family: 'Manrope', sans-serif;
-  font-weight: 800;
+      font-weight: 800;
+      text-shadow: 0 0 20px rgba(228, 59, 59, 0.4);
+    }
+
+    /* Red glowing laser scanner edge leading the text reveal */
+    .intro-laser-scanner {
+      position: absolute;
+      top: -3px;
+      bottom: -3px;
+      left: 0;
+      width: 2.5px;
+      background: #FFFFFF;
+      box-shadow: 0 0 8px #FFFFFF, 0 0 16px var(--accent), 0 0 28px rgba(228, 59, 59, 0.95);
+      border-radius: 2px;
+      opacity: 0;
+      pointer-events: none;
+      transition: left 0.72s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.3s ease;
     }
 
     .intro-text.reveal-text {
       opacity: 1;
-      clip-path: inset(0 0 0 0); /* Fully reveals text */
-      transform: translateX(-40px); /* Centers the combined block slightly */
-      transition-delay: 0.2s; /* Waits slightly after logo starts moving */
+      clip-path: inset(0 0 0 0);
+      letter-spacing: 0.01em;
+      transform: translateX(-40px);
+      transition-delay: 0.12s;
+    }
+
+    .intro-text.reveal-text .intro-laser-scanner {
+      opacity: 1;
+      left: 100%;
+      transition-delay: 0.12s;
     }
 
     .intro-text.hide-text {
       opacity: 0;
-      clip-path: inset(0 0 0 100%); /* Disappears smoothly to the right */
-      transition: clip-path 0.5s ease, opacity 0.5s ease;
+      clip-path: inset(0 0 0 100%);
+      transition: clip-path 0.35s cubic-bezier(0.7, 0, 0.2, 1), opacity 0.35s ease;
+    }
+
+    .intro-text.hide-text .intro-laser-scanner {
+      left: 100%;
+      opacity: 0;
+      transition: opacity 0.25s ease;
     }
 
     /* Mobile phones: keep the name beneath the logo. Tablets (768px and up)
@@ -1978,7 +2407,6 @@
 
       .intro-text {
         left: 50%;
-        /* Position below the full 140px logo, rather than over its lower edge. */
         top: calc(100% + 18px);
         transform: translateX(-50%);
         width: max-content;
@@ -2022,13 +2450,15 @@
 <body id="top">
   <!-- INTRO ANIMATION OVERLAY -->
   <div id="intro-overlay" aria-hidden="true">
-    <div class="stars-bg" id="starsBg"></div>
+    <canvas class="stars-bg" id="introCanvas"></canvas>
     <div class="intro-content">
       <div class="intro-logo-wrapper">
+        <div class="intro-logo-shockwave" id="introShockwave" aria-hidden="true"></div>
         <img src="logo.webp" class="intro-logo" id="introLogo" alt="Darsh Portfolio Logo">
       </div>
       <div class="intro-text" id="introText">
         Darsh Kumar <span class="accent-name">Choudhary</span>
+        <span class="intro-laser-scanner" id="introScanner" aria-hidden="true"></span>
       </div>
     </div>
   </div>
@@ -2058,8 +2488,32 @@
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </div>
+      <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavDrawer">
+        <span class="bar bar-top"></span>
+        <span class="bar bar-mid"></span>
+        <span class="bar bar-bot"></span>
+      </button>
     </div>
   </nav>
+
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+    <div class="mobile-nav-panel">
+      <div class="mobile-nav-header">
+        <span class="mobile-nav-kicker">Navigation</span>
+        <button class="mobile-nav-close" id="mobileNavClose" type="button" aria-label="Close navigation menu">✕</button>
+      </div>
+      <nav class="mobile-nav-links">
+        <a href="#work" class="mobile-nav-link"><span class="m-num">01</span><span class="m-txt">Work</span><span class="m-arrow">→</span></a>
+        <a href="#about" class="mobile-nav-link"><span class="m-num">02</span><span class="m-txt">About</span><span class="m-arrow">→</span></a>
+        <a href="#contact" class="mobile-nav-link"><span class="m-num">03</span><span class="m-txt">Contact</span><span class="m-arrow">→</span></a>
+      </nav>
+      <div class="mobile-nav-footer">
+        <a class="mobile-nav-sublink" href="https://www.linkedin.com/in/darsh-kumar-choudhary-835374420/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a class="mobile-nav-sublink" href="mailto:darsh.aiml25@cmrit.ac.in">darsh.aiml25@cmrit.ac.in ↗</a>
+      </div>
+    </div>
+  </div>
 
   <header class="hero">
     <div class="photo-grid" id="photoGrid" aria-hidden="true"></div>
@@ -2099,7 +2553,7 @@
 
   <section id="about">
     <div class="wrap">
-      <p class="eyebrow scroll-reveal">About</p>
+      <h2 class="eyebrow scroll-reveal">About</h2>
       <div class="about-grid motion-reveal scroll-reveal">
         <div class="about-copy">
           <p>I'm an AI/ML engineering student who likes building things that are actually useful to someone — not just
@@ -2252,15 +2706,16 @@
 
   <script>
 
-    /* ---------- INTRO ANIMATION SEQUENCE ---------- */
+    /* ---------- CINEMATIC INTRO ANIMATION SEQUENCE (index2.html) ---------- */
     document.addEventListener("DOMContentLoaded", () => {
       const overlay = document.getElementById('intro-overlay');
       const introLogo = document.getElementById('introLogo');
       const introText = document.getElementById('introText');
+      const introShockwave = document.getElementById('introShockwave');
       const realLogo = document.querySelector('.site-logo-nav');
-      const starsBg = document.getElementById('starsBg');
+      const canvas = document.getElementById('introCanvas');
 
-      if (!overlay || !introLogo || !introText || !realLogo || !starsBg) return;
+      if (!overlay || !introLogo || !introText || !realLogo || !canvas) return;
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const scrollbarWidth = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
@@ -2274,21 +2729,6 @@
       realLogo.style.pointerEvents = 'none';
       realLogo.style.transition = 'opacity 180ms ease';
 
-      // Build the star field immediately so space is visible from the beginning.
-      const starCount = window.innerWidth < 768 ? 46 : 92;
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        const size = Math.random() * 2 + 0.7;
-        star.className = 'intro-star';
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.width = `${size}px`;
-        star.style.height = `${size}px`;
-        star.style.animationDuration = `${Math.random() * 2.2 + 3.2}s`;
-        star.style.animationDelay = `${Math.random() * 0.35}s`;
-        starsBg.appendChild(star);
-      }
-
       if (reduceMotion) {
         realLogo.style.opacity = '1';
         realLogo.style.pointerEvents = '';
@@ -2298,33 +2738,158 @@
         return;
       }
 
-      // STEP 1: centre logo reveal.
+      // ---------- 3D WARP & GRAVITATIONAL STARFIELD ENGINE ----------
+      const ctx = canvas.getContext('2d');
+      let animFrameId = null;
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const starCount = width < 768 ? 85 : 160;
+      const stars = [];
+
+      for (let i = 0; i < starCount; i++) {
+        stars.push({
+          x: (Math.random() - 0.5) * width * 1.6,
+          y: (Math.random() - 0.5) * height * 1.6,
+          z: Math.random() * 1000 + 40,
+          pz: 0,
+          color: Math.random() > 0.84 ? 'rgba(228, 59, 59, ' : 'rgba(255, 255, 255, ',
+          size: Math.random() * 1.6 + 0.6,
+          speed: Math.random() * 3.2 + 2.2,
+          alpha: Math.random() * 0.4 + 0.6
+        });
+      }
+
+      let isGravitating = false;
+      let gravityTargetX = 0;
+      let gravityTargetY = 0;
+      let gravityStrength = 0;
+
+      function renderStars() {
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, width, height);
+
+        const cx = width / 2;
+        const cy = height / 2;
+
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
+
+          if (isGravitating) {
+            // Gravitational singularity: matter sucked into the navbar logo
+            const k = 400 / Math.max(10, s.z);
+            const sx = s.x * k + cx;
+            const sy = s.y * k + cy;
+
+            const dx = gravityTargetX - sx;
+            const dy = gravityTargetY - sy;
+            const dist = Math.hypot(dx, dy);
+
+            if (dist < 18) {
+              // Reached event horizon
+              continue;
+            }
+
+            const pull = Math.min(32, (gravityStrength * 1600) / Math.max(25, dist));
+            const angle = Math.atan2(dy, dx);
+            s.x += (Math.cos(angle) * pull) / k;
+            s.y += (Math.sin(angle) * pull) / k;
+            s.z = Math.max(12, s.z - 10);
+
+            // Kinetic streak heading towards navbar logo
+            ctx.beginPath();
+            ctx.strokeStyle = `${s.color}${Math.min(1, s.alpha * (dist / 80))})`;
+            ctx.lineWidth = Math.min(3.2, s.size * (1 + pull * 0.12));
+            ctx.moveTo(sx, sy);
+            ctx.lineTo(sx - Math.cos(angle) * pull * 1.8, sy - Math.sin(angle) * pull * 1.8);
+            ctx.stroke();
+
+            // Bright star nucleus
+            ctx.beginPath();
+            ctx.arc(sx, sy, Math.max(0.6, s.size * 0.85), 0, Math.PI * 2);
+            ctx.fillStyle = `${s.color}${s.alpha})`;
+            ctx.fill();
+            continue;
+          }
+
+          // Deep space forward warp motion
+          s.pz = s.z;
+          s.z -= s.speed;
+          if (s.z <= 12) {
+            s.z = 1000;
+            s.pz = 1000;
+            s.x = (Math.random() - 0.5) * width * 1.6;
+            s.y = (Math.random() - 0.5) * height * 1.6;
+          }
+
+          const k = 400 / s.z;
+          const px = s.x * k + cx;
+          const py = s.y * k + cy;
+
+          const pk = 400 / s.pz;
+          const prevX = s.x * pk + cx;
+          const prevY = s.y * pk + cy;
+
+          if (px >= 0 && px <= width && py >= 0 && py <= height) {
+            const rad = Math.max(0.5, (1 - s.z / 1000) * s.size * 1.7);
+            const a = Math.min(1, (1 - s.z / 1000) * 1.4 * s.alpha);
+
+            // Motion trail
+            ctx.beginPath();
+            ctx.strokeStyle = `${s.color}${a * 0.65})`;
+            ctx.lineWidth = rad * 0.85;
+            ctx.moveTo(prevX, prevY);
+            ctx.lineTo(px, py);
+            ctx.stroke();
+
+            // Star nucleus
+            ctx.beginPath();
+            ctx.arc(px, py, rad, 0, Math.PI * 2);
+            ctx.fillStyle = `${s.color}${a})`;
+            ctx.fill();
+          }
+        }
+
+        ctx.restore();
+        animFrameId = requestAnimationFrame(renderStars);
+      }
+      animFrameId = requestAnimationFrame(renderStars);
+
+      // ---------- STEP 1: LOGO EMERGENCE & ENERGY PULSE (0ms) ----------
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => introLogo.classList.add('reveal-logo'));
+        requestAnimationFrame(() => {
+          introLogo.classList.add('reveal-logo');
+          if (introShockwave) introShockwave.classList.add('pulse');
+        });
       });
 
-      // STEP 2: reveal the name.
+      // ---------- STEP 2: NAME UNMASKING WITH LASER SCANNER (750ms) ----------
       setTimeout(() => {
         introLogo.classList.add('shift-left');
         introText.classList.add('reveal-text');
-      }, 1000);
+      }, 750);
 
-      // STEP 3: hide the name.
+      // ---------- STEP 3: NAME DISSOLVES (2100ms) ----------
       setTimeout(() => {
         introText.classList.remove('reveal-text');
         introText.classList.add('hide-text');
-      }, 2920);
+      }, 2100);
 
-      let targetCenterX = 0;
-      let targetCenterY = 0;
-
-      // STEP 4: smooth FLIP flight to the exact underlying navigation logo.
+      // ---------- STEP 4: FLIP FLIGHT TO NAVBAR (2400ms) ----------
       setTimeout(() => {
         const startRect = introLogo.getBoundingClientRect();
         const targetRect = realLogo.getBoundingClientRect();
-
-        targetCenterX = targetRect.left + targetRect.width / 2;
-        targetCenterY = targetRect.top + targetRect.height / 2;
 
         introLogo.classList.remove('shift-left');
         introLogo.style.transition = 'none';
@@ -2334,7 +2899,7 @@
         introLogo.style.width = `${targetRect.width}px`;
         introLogo.style.height = `${targetRect.height}px`;
         introLogo.style.margin = '0';
-        introLogo.style.zIndex = '3';
+        introLogo.style.zIndex = '1000001';
         introLogo.style.transformOrigin = 'top left';
 
         const deltaX = startRect.left - targetRect.left;
@@ -2346,64 +2911,77 @@
         void introLogo.offsetWidth;
 
         requestAnimationFrame(() => {
-          introLogo.style.transition = 'transform 1000ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease';
+          introLogo.style.transition = 'transform 750ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease';
           introLogo.style.transform = 'translate3d(0, 0, 0) scale(1, 1)';
         });
-      }, 3500);
+      }, 2400);
 
-      // STEP 5: hand off to the real logo, then pull the space overlay INTO it.
+      // ---------- STEP 5: DOCKING IMPACT + GRAVITATIONAL COLLAPSE (3150ms) ----------
       setTimeout(() => {
         const targetRect = realLogo.getBoundingClientRect();
-        targetCenterX = targetRect.left + targetRect.width / 2;
-        targetCenterY = targetRect.top + targetRect.height / 2;
+        const targetCenterX = targetRect.left + targetRect.width / 2;
+        const targetCenterY = targetRect.top + targetRect.height / 2;
 
-        // Keep the moving intro logo visible throughout the inward warp.
-        // The real navigation logo is revealed underneath it so the overlay can
-        // disappear cleanly at the end without a visual jump or logo flicker.
+        // Reveal the real navigation logo seamlessly underneath
         realLogo.style.opacity = '1';
         realLogo.style.pointerEvents = '';
         introLogo.style.opacity = '1';
 
+        // 1. Tactile Docking Snap on Logo
+        introLogo.classList.add('dock-snap');
+
+        // 2. Localized Shockwave Ripple Emitted from Navbar Logo
+        const ripple = document.createElement('div');
+        ripple.className = 'intro-dock-ripple';
+        ripple.style.left = `${targetCenterX}px`;
+        ripple.style.top = `${targetCenterY}px`;
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 750);
+
+        // 3. Trigger Gravitational Singularity into Logo Coordinates
+        isGravitating = true;
+        gravityTargetX = targetCenterX;
+        gravityTargetY = targetCenterY;
+
+        // 4. GPU-Accelerated Inward Event Horizon Collapse via clip-path: circle()
         const maxRadius = Math.max(
           Math.hypot(targetCenterX, targetCenterY),
           Math.hypot(window.innerWidth - targetCenterX, targetCenterY),
           Math.hypot(targetCenterX, window.innerHeight - targetCenterY),
           Math.hypot(window.innerWidth - targetCenterX, window.innerHeight - targetCenterY)
-        ) + 100;
+        ) + 40;
 
-        const revealDuration = 1200;
+        const revealDuration = 700;
         const revealStart = performance.now();
 
         function animateInwardWarp(now) {
           const progress = Math.min((now - revealStart) / revealDuration, 1);
-          // Slow at first, then increasingly pulled into the logo.
-          const eased = 1 - Math.pow(1 - progress, 2.6);
-          const radius = Math.max(0, (1 - eased) * maxRadius);
-          const ripple = Math.sin(progress * Math.PI * 4) * (1 - progress) * 18;
-          const warpedRadius = Math.max(0, radius + ripple);
-          const softInner = Math.max(0, warpedRadius - 34);
-          const softOuter = warpedRadius + 42;
+          // Cubic ease-in: pulls faster as event horizon nears singularity
+          const eased = Math.pow(progress, 2.8);
+          const currentRadius = Math.max(0, (1 - eased) * maxRadius);
 
-          // Black = overlay remains visible; transparent = website beneath is revealed.
-          const mask = `radial-gradient(circle at ${targetCenterX}px ${targetCenterY}px, #000 0px, #000 ${softInner}px, rgba(0,0,0,.78) ${warpedRadius}px, rgba(0,0,0,.24) ${softOuter}px, transparent ${warpedRadius + 82}px)`;
-          overlay.style.webkitMaskImage = mask;
-          overlay.style.maskImage = mask;
+          gravityStrength = progress * 1.8;
+
+          // GPU-composited hardware-accelerated clip-path circle
+          overlay.style.clipPath = `circle(${currentRadius}px at ${targetCenterX}px ${targetCenterY}px)`;
+          overlay.style.webkitClipPath = `circle(${currentRadius}px at ${targetCenterX}px ${targetCenterY}px)`;
 
           if (progress < 1) {
             requestAnimationFrame(animateInwardWarp);
           } else {
-            // Keep the intro logo visible until the overlay itself disappears.
-            // The real nav logo is already visible directly beneath it for a seamless handoff.
+            // Clean teardown & unlock
             setTimeout(() => {
+              if (animFrameId) cancelAnimationFrame(animFrameId);
+              window.removeEventListener('resize', resizeCanvas);
               overlay.remove();
               document.body.classList.remove('intro-active');
               document.documentElement.style.removeProperty('--intro-scrollbar-compensation');
-            }, 40);
+            }, 30);
           }
         }
 
         requestAnimationFrame(animateInwardWarp);
-      }, 4500);
+      }, 3150);
     });
 
     /* ---------- EMAIL ROW: click to copy instead of (or before) opening mail ---------- */
@@ -3175,6 +3753,52 @@
           schedule();
         }
       }, { passive: true });
+    })();
+
+    /* ---------- MOBILE NAVIGATION DRAWER ---------- */
+    (function () {
+      const toggle = document.getElementById('mobileNavToggle');
+      const closeBtn = document.getElementById('mobileNavClose');
+      const backdrop = document.getElementById('mobileNavBackdrop');
+      const drawer = document.getElementById('mobileNavDrawer');
+      const links = document.querySelectorAll('.mobile-nav-link');
+
+      if (!toggle || !drawer) return;
+
+      function openMenu() {
+        document.body.classList.add('mobile-nav-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        drawer.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeMenu() {
+        document.body.classList.remove('mobile-nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+      }
+
+      toggle.addEventListener('click', () => {
+        if (document.body.classList.contains('mobile-nav-open')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      if (backdrop) backdrop.addEventListener('click', closeMenu);
+
+      links.forEach(link => {
+        link.addEventListener('click', () => {
+          closeMenu();
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('mobile-nav-open')) {
+          closeMenu();
+        }
+      });
     })();
 
   </script>
