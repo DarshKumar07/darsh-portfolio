@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Darsh Kumar Choudhary | AI/ML Engineer & Developer</title>
@@ -30,7 +31,13 @@
   <meta name="twitter:image" content="https://darshkumar07.github.io/darsh-portfolio/social-preview.png">
   <meta name="twitter:image:alt" content="Darsh Kumar Choudhary — AI/ML Engineer & Developer">
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self';">
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; form-action 'none'; object-src 'none'; base-uri 'self';">
+  <!-- Anti-Clickjacking Frame Guard (Protects static hosting where HTTP frame headers cannot be set) -->
+  <script>
+    if (window.top !== window.self) {
+      window.top.location = window.self.location;
+    }
+  </script>
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
@@ -2414,6 +2421,18 @@
       backface-visibility: hidden;
     }
 
+    /* If JavaScript is disabled or blocked, hide intro overlay and restore full page access */
+    html.no-js #intro-overlay {
+      display: none !important;
+    }
+    html.no-js .site-logo-nav {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+    html.no-js body {
+      overflow-y: auto !important;
+    }
+
     canvas.stars-bg {
       position: absolute;
       inset: 0;
@@ -2660,9 +2679,18 @@
     }
 
   </style>
+  <!-- Fallback if JavaScript is disabled: hide intro overlay and restore page access -->
+  <noscript>
+    <style>
+      #intro-overlay { display: none !important; }
+      body { overflow-y: auto !important; }
+      .site-logo-nav { opacity: 1 !important; pointer-events: auto !important; }
+    </style>
+  </noscript>
 </head>
 
 <body id="top">
+
   <!-- INTRO ANIMATION OVERLAY -->
   <div id="intro-overlay" aria-hidden="true">
     <canvas class="stars-bg" id="introCanvas"></canvas>
@@ -2733,6 +2761,7 @@
     </div>
   </div>
 
+  <main id="main">
   <header class="hero">
     <div class="photo-grid" id="photoGrid" aria-hidden="true"></div>
     <div class="grid-scan" id="gridScan" aria-hidden="true"></div>
@@ -2789,10 +2818,10 @@
     <canvas id="dataWaveCanvas"></canvas>
   </div>
 
-  <main id="main">
   <section id="about">
     <div class="wrap">
-      <h2 class="eyebrow scroll-reveal">About</h2>
+      <p class="eyebrow scroll-reveal">About</p>
+      <h2 class="section-title scroll-reveal">Building at the intersection of AI and real problems.</h2>
       <div class="about-grid motion-reveal scroll-reveal">
         <div class="about-copy">
           <p>I'm an AI/ML engineering student who likes building things that are actually useful to someone — not just
@@ -2967,12 +2996,26 @@
       document.body.classList.add('intro-active');
       window.scrollTo(0, 0);
 
+      // Safety watchdog: ensures the overlay is never stuck permanently if an unexpected runtime error occurs
+      const introSafetyTimer = setTimeout(() => {
+        if (overlay && overlay.parentNode) {
+          realLogo.style.opacity = '1';
+          realLogo.style.pointerEvents = '';
+          window.removeEventListener('wheel', preventIntroScroll);
+          window.removeEventListener('touchmove', preventIntroScroll);
+          window.removeEventListener('keydown', preventIntroKeyScroll);
+          overlay.remove();
+          document.body.classList.remove('intro-active');
+        }
+      }, 5500);
+
       // Keep the real logo in its final position, but hide it until the handoff.
       realLogo.style.opacity = '0';
       realLogo.style.pointerEvents = 'none';
       realLogo.style.transition = 'opacity 180ms ease';
 
       if (reduceMotion) {
+        clearTimeout(introSafetyTimer);
         realLogo.style.opacity = '1';
         realLogo.style.pointerEvents = '';
         overlay.remove();
@@ -3216,6 +3259,7 @@
           } else {
             // Clean teardown & unlock
             setTimeout(() => {
+              clearTimeout(introSafetyTimer);
               if (animFrameId) cancelAnimationFrame(animFrameId);
               window.removeEventListener('resize', resizeCanvas);
               window.removeEventListener('wheel', preventIntroScroll);
@@ -4028,16 +4072,31 @@
 
       if (!toggle || !drawer) return;
 
+      let lastFocusedElement = null;
+
+      function getFocusableElements() {
+        return drawer.querySelectorAll('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      }
+
       function openMenu() {
+        lastFocusedElement = document.activeElement;
         document.body.classList.add('mobile-nav-open');
         toggle.setAttribute('aria-expanded', 'true');
         drawer.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(() => {
+          if (closeBtn) closeBtn.focus();
+        });
       }
 
       function closeMenu() {
         document.body.classList.remove('mobile-nav-open');
         toggle.setAttribute('aria-expanded', 'false');
         drawer.setAttribute('aria-hidden', 'true');
+        if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+          lastFocusedElement.focus();
+        } else if (toggle) {
+          toggle.focus();
+        }
       }
 
       toggle.addEventListener('click', () => {
@@ -4058,8 +4117,27 @@
       });
 
       window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && document.body.classList.contains('mobile-nav-open')) {
+        if (!document.body.classList.contains('mobile-nav-open')) return;
+
+        if (e.key === 'Escape') {
           closeMenu();
+          return;
+        }
+
+        if (e.key === 'Tab') {
+          const focusables = Array.from(getFocusableElements()).filter(el => !el.disabled && el.offsetParent !== null);
+          if (focusables.length === 0) return;
+
+          const firstEl = focusables[0];
+          const lastEl = focusables[focusables.length - 1];
+
+          if (e.shiftKey && document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          } else if (!e.shiftKey && document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
         }
       });
     })();
