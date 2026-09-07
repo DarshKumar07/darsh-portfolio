@@ -339,7 +339,7 @@
       position: relative;
       padding: 76px 0 0;
       border-bottom: 1px solid var(--line);
-      overflow: visible;
+      overflow: hidden;
       isolation: isolate;
     }
 
@@ -1437,13 +1437,15 @@
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        transition: opacity .28s ease, visibility .28s ease;
+        overflow: hidden;
+        transition: opacity .28s ease, visibility 0s linear .28s;
       }
 
       body.mobile-nav-open .mobile-nav-drawer {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
+        transition: opacity .28s ease, visibility 0s linear 0s;
       }
 
       body.mobile-nav-open {
@@ -2191,20 +2193,30 @@
 
 
     /* ---------- CUSTOM CURSOR ---------- */
+    .custom-cursor-dot,
+    .custom-cursor-ring {
+      display: none;
+    }
+
     @media (pointer: fine) {
 
       html,
       body,
       a,
+      a *,
       button,
+      button *,
       [role="button"],
       .footer-logo-link,
-      .site-logo-link {
+      .footer-logo-link *,
+      .site-logo-link,
+      .site-logo-link * {
         cursor: none !important;
       }
 
       .custom-cursor-dot,
       .custom-cursor-ring {
+        display: block;
         position: fixed;
         top: 0;
         left: 0;
@@ -2697,7 +2709,7 @@
     <div class="intro-content">
       <div class="intro-logo-wrapper">
         <div class="intro-logo-shockwave" id="introShockwave" aria-hidden="true"></div>
-        <img src="logo.webp" class="intro-logo" id="introLogo" alt="Darsh Portfolio Logo">
+        <img src="logo.webp" class="intro-logo" id="introLogo" alt="Darsh Portfolio Logo" width="140" height="140">
       </div>
       <div class="intro-text" id="introText">
         Darsh Kumar <span class="accent-name">Choudhary</span>
