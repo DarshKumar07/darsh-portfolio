@@ -334,6 +334,270 @@
       display: none;
     }
 
+    /* ---------- SPIDER-MAN WEB DROP COMPONENT ---------- */
+    .spidey-portal {
+      position: absolute;
+      top: 100%;
+      right: clamp(14px, 1.8vw, 24px);
+      width: 90px;
+      z-index: 80;
+      pointer-events: none;
+      /* Hard clip at y = 0 (bottom edge of navbar): NOTHING can EVER appear above the navbar! */
+      clip-path: polygon(-500px 0px, calc(100% + 500px) 0px, calc(100% + 500px) 2500px, -500px 2500px);
+    }
+
+    .spidey-hanger {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transform-origin: top center;
+      will-change: transform, opacity;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: filter .3s ease;
+      opacity: 0;
+      transform: translateY(-210px);
+      pointer-events: none;
+    }
+
+    /* Silky-smooth spring descent directly out of the navigation bar */
+    .spidey-hanger.is-entering {
+      opacity: 1;
+      pointer-events: auto;
+      animation: spideySmoothDrop 2.2s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+    }
+
+    /* Idle pendulum swing */
+    .spidey-hanger.is-swinging {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      animation: spideyPendulum 5.6s ease-in-out infinite;
+    }
+
+    @keyframes spideySmoothDrop {
+      0% {
+        transform: translateY(-210px) rotate(0deg);
+      }
+      62% {
+        /* Soft descent reaching full extension with a gentle, organic overshoot */
+        transform: translateY(11px) rotate(-1.5deg);
+      }
+      80% {
+        /* Gentle elastic rebound from web tension */
+        transform: translateY(-4px) rotate(0.8deg);
+      }
+      91% {
+        /* Micro settle */
+        transform: translateY(1px) rotate(-0.3deg);
+      }
+      100% {
+        /* Smooth rest, ready for idle sway */
+        transform: translateY(0) rotate(0deg);
+      }
+    }
+
+    @keyframes spideyPendulum {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      25% {
+        transform: translateY(0) rotate(2.4deg);
+      }
+      75% {
+        transform: translateY(0) rotate(-2.4deg);
+      }
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+    }
+
+    /* Web line connecting seamlessly from navbar down through Spider-Man's grip */
+    .spidey-web-line {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      width: 2px;
+      height: 216px;
+      margin-left: -1px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.75) 100%);
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(var(--accent-rgb), 0.25);
+      transform-origin: center 120px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Web line stretches/compresses in unison when pulled */
+    .spidey-web-line.is-pulled {
+      animation: spideyWebRebound 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes spideyWebRebound {
+      0% { transform: scaleY(1); }
+      35% { transform: scaleY(0.70); }
+      70% { transform: scaleY(1.06); }
+      100% { transform: scaleY(1); }
+    }
+
+    .spidey-character {
+      position: relative;
+      width: 100%;
+      margin-top: 48px; /* 48px down so the 96px web line continuously overlaps behind Spider-Man's hands */
+      cursor: pointer;
+      transform-origin: top center;
+      transition: transform .25s cubic-bezier(0.34, 1.56, 0.64, 1), filter .3s ease;
+      z-index: 2;
+    }
+
+    .spidey-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.65));
+      transition: filter .3s ease, transform .25s ease;
+    }
+
+    .spidey-character:focus {
+      outline: none;
+    }
+    .spidey-character:focus-visible {
+      outline: 2px solid rgba(255, 220, 50, 0.6);
+      outline-offset: 4px;
+      border-radius: 8px;
+    }
+
+    /* Hover effect: Spidey sense lights up with vibrant golden electric aura */
+    .spidey-character:hover .spidey-img,
+    .spidey-character:focus-visible .spidey-img {
+      filter: drop-shadow(0 0 14px rgba(255, 225, 50, 0.85)) drop-shadow(0 0 28px rgba(228, 59, 59, 0.45));
+      transform: scale(1.03);
+    }
+
+    /* Click rebound animation in lockstep with web line */
+    .spidey-character.is-pulled {
+      animation: spideyRebound 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes spideyRebound {
+      0% { transform: translateY(0); }
+      35% { transform: translateY(-28px) scale(0.98); }
+      70% { transform: translateY(6px) scale(1.01); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    /* Comic dialogue bubble - positioned directly below Spider-Man in the empty right gutter */
+    .spidey-bubble {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      background: rgba(13, 16, 22, 0.95);
+      border: 1px solid rgba(255, 220, 50, 0.55);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 14px rgba(255, 220, 50, 0.18);
+      border-radius: 12px;
+      padding: 9px 13px;
+      width: max-content;
+      max-width: 200px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-8px) scale(0.92);
+      transition: opacity .25s ease, transform .25s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .spidey-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      right: 36px;
+      border-width: 0 6px 7px 6px;
+      border-style: solid;
+      border-color: transparent transparent rgba(255, 220, 50, 0.55) transparent;
+    }
+
+    .spidey-bubble-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      line-height: 1.45;
+      color: #F0F2F5;
+      display: block;
+    }
+
+    .spidey-bubble.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Cursor rules: ensure cursor: none !important for custom cursor */
+    @media (pointer: fine) {
+      .spidey-character,
+      .spidey-character * {
+        cursor: none !important;
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+      .spidey-portal {
+        width: 82px;
+        right: 12px;
+      }
+      .spidey-web-line {
+        top: -120px;
+        height: 204px;
+        transform-origin: center 120px;
+      }
+      .spidey-character {
+        margin-top: 42px;
+      }
+      .spidey-bubble {
+        max-width: 180px;
+        font-size: 10.5px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .spidey-portal {
+        width: 60px;
+        right: 56px;
+      }
+      .spidey-web-line {
+        top: -120px;
+        height: 184px;
+        transform-origin: center 120px;
+      }
+      .spidey-character {
+        margin-top: 32px;
+      }
+      .spidey-bubble {
+        right: 0;
+        top: calc(100% + 6px);
+        max-width: 150px;
+        font-size: 9.5px;
+        padding: 6px 10px;
+      }
+      .spidey-bubble::after {
+        right: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .spidey-hanger {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        pointer-events: auto !important;
+      }
+      .spidey-hanger.is-entering,
+      .spidey-hanger.is-swinging,
+      .spidey-web-line.is-pulled,
+      .spidey-character.is-pulled {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+
     /* ---------- HERO (3D photo + name + quote) ---------- */
     header.hero {
       position: relative;
@@ -2752,6 +3016,18 @@
         <span class="bar bar-bot"></span>
       </button>
     </div>
+    <!-- SPIDER-MAN WEB DROP COMPONENT -->
+    <div class="spidey-portal" id="spideyPortal">
+      <div class="spidey-hanger" id="spideyHanger" aria-label="Spider-Man companion">
+        <div class="spidey-web-line" id="spideyWebLine"></div>
+        <div class="spidey-bubble" id="spideyBubble" aria-hidden="true">
+          <span class="spidey-bubble-text" id="spideyBubbleText">Don't mind me, I'm just your friendly neighborhood Spider-Man! 🕷️</span>
+        </div>
+        <div class="spidey-character" id="spideyCharacter" role="button" tabindex="0" aria-label="Click to interact with Spider-Man">
+          <img src="spiderman.webp" alt="Spider-Man hanging upside down from web" class="spidey-img" width="421" height="694" loading="eager">
+        </div>
+      </div>
+    </div>
   </nav>
 
   <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
@@ -3018,6 +3294,7 @@
           window.removeEventListener('keydown', preventIntroKeyScroll);
           overlay.remove();
           document.body.classList.remove('intro-active');
+          window.dispatchEvent(new CustomEvent('introComplete'));
         }
       }, 5500);
 
@@ -3032,6 +3309,7 @@
         realLogo.style.pointerEvents = '';
         overlay.remove();
         document.body.classList.remove('intro-active');
+        window.dispatchEvent(new CustomEvent('introComplete'));
         window.removeEventListener('wheel', preventIntroScroll);
         window.removeEventListener('touchmove', preventIntroScroll);
         window.removeEventListener('keydown', preventIntroKeyScroll);
@@ -3279,6 +3557,7 @@
               window.removeEventListener('keydown', preventIntroKeyScroll);
               overlay.remove();
               document.body.classList.remove('intro-active');
+              window.dispatchEvent(new CustomEvent('introComplete'));
             }, 30);
           }
         }
@@ -4150,6 +4429,138 @@
             e.preventDefault();
             firstEl.focus();
           }
+        }
+      });
+    })();
+
+    /* ---------- SPIDER-MAN INTERACTIVE BEHAVIOR ---------- */
+    (function () {
+      const hanger = document.getElementById('spideyHanger');
+      const webLine = document.getElementById('spideyWebLine');
+      const character = document.getElementById('spideyCharacter');
+      const bubble = document.getElementById('spideyBubble');
+      const bubbleText = document.getElementById('spideyBubbleText');
+
+      if (!hanger || !character || !bubble || !bubbleText) return;
+
+      const introLine = "Don't mind me, I'm just your friendly neighborhood Spider-Man! 🕷️";
+      const quips = [
+        "Recruiter alert! My Spidey-Sense says Darsh is the AI Engineer your team needs. ⚡",
+        "Created FlexiHeal from scratch: AI tele-rehab with real-time pose tracking & wearable vitals. Check Selected Work! 👇",
+        "Looking for someone who grasps AI fundamentals and executes fast? Schedule an interview! 🤝",
+        "Fast learner, relentless problem solver, and writes clean, maintainable code. Hire him today! 🚀",
+        "With great compute comes great responsibility — and Darsh knows how to handle greatness. 🕸️"
+      ];
+      let quipIndex = -1;
+      let bubbleTimeout = null;
+      let entranceDone = false;
+
+      function startEntrance() {
+        if (entranceDone) return;
+        entranceDone = true;
+
+        hanger.classList.add('is-entering');
+        hanger.addEventListener('animationend', (e) => {
+          if (e.animationName === 'spideySmoothDrop') {
+            hanger.classList.remove('is-entering');
+            hanger.classList.add('is-swinging');
+
+            // Deliver intro greeting upon touchdown
+            bubbleText.textContent = introLine;
+            bubble.classList.add('is-visible');
+            clearTimeout(bubbleTimeout);
+            bubbleTimeout = setTimeout(() => {
+              bubble.classList.remove('is-visible');
+            }, 4800);
+          }
+        });
+      }
+
+      function initEntrance() {
+        const overlay = document.getElementById('intro-overlay');
+        // If there's no intro overlay in DOM at all (e.g. disabled or removed), start entrance directly
+        if (!overlay) {
+          setTimeout(startEntrance, 300);
+          return;
+        }
+
+        // Intro overlay is present in DOM — Spider-Man MUST wait until the intro is completely finished!
+        let introFinished = false;
+        function onIntroFinished() {
+          if (introFinished) return;
+          introFinished = true;
+          // Spider-Man descends down from the navigation bar right after the page is revealed
+          setTimeout(startEntrance, 250);
+        }
+
+        // 1. Primary trigger: Custom event dispatched when overlay finishes and removes itself
+        window.addEventListener('introComplete', onIntroFinished, { once: true });
+
+        // 2. Secondary trigger: MutationObserver detecting overlay removal from DOM
+        const observer = new MutationObserver(() => {
+          if (!document.getElementById('intro-overlay')) {
+            observer.disconnect();
+            onIntroFinished();
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        // 3. Safety watchdog: if intro animation fails or hangs, ensure Spider-Man still drops
+        setTimeout(onIntroFinished, 6000);
+      }
+
+      initEntrance();
+
+      function showNextQuip() {
+        quipIndex = (quipIndex + 1) % quips.length;
+        bubbleText.textContent = quips[quipIndex];
+        bubble.classList.add('is-visible');
+        clearTimeout(bubbleTimeout);
+        bubbleTimeout = setTimeout(() => {
+          bubble.classList.remove('is-visible');
+        }, 4000);
+      }
+
+      // Hover / Focus interactions
+      function showCurrentBubble() {
+        bubbleText.textContent = quipIndex === -1 ? introLine : quips[quipIndex];
+        bubble.classList.add('is-visible');
+      }
+
+      function hideBubbleWithDelay(delay = 900) {
+        clearTimeout(bubbleTimeout);
+        bubbleTimeout = setTimeout(() => {
+          bubble.classList.remove('is-visible');
+        }, delay);
+      }
+
+      character.addEventListener('mouseenter', showCurrentBubble);
+      character.addEventListener('mouseleave', () => hideBubbleWithDelay(900));
+      character.addEventListener('focus', showCurrentBubble);
+      character.addEventListener('blur', () => hideBubbleWithDelay(400));
+
+      // Click / Tap web pull bounce (in lockstep with web line)
+      function triggerPull() {
+        character.classList.remove('is-pulled');
+        if (webLine) webLine.classList.remove('is-pulled');
+        void character.offsetWidth; // force reflow
+        character.classList.add('is-pulled');
+        if (webLine) webLine.classList.add('is-pulled');
+        showNextQuip();
+      }
+
+      character.addEventListener('animationend', (e) => {
+        if (e.animationName === 'spideyRebound') {
+          character.classList.remove('is-pulled');
+          if (webLine) webLine.classList.remove('is-pulled');
+        }
+      });
+
+      character.addEventListener('click', triggerPull);
+      character.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          triggerPull();
         }
       });
     })();
